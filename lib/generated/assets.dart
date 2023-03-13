@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String imageBarcod = 'assets/image/barcod.ico';
   static const String imageSplash = 'assets/image/splash.jpg';
 
 }

@@ -37,7 +37,7 @@ class MyThemeData {
         headline2: TextStyle(
             fontSize: 30, fontWeight: FontWeight.bold, color: RODINACOLOR),
         subtitle2: TextStyle(
-            fontSize: 35, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 20, fontWeight: FontWeight.bold, color: RODINACOLOR),
       ),
       floatingActionButtonTheme:
           const FloatingActionButtonThemeData(backgroundColor: RODINACOLOR),

@@ -1,14 +1,17 @@
 class InvoiceItem {
-  String id;
+  int? id;
   String product;
   int quantity;
   double price;
   int code;
+  double total;
 
   InvoiceItem(
-      { this.id='',
+      { this.id,
       required this.product,
       required this.quantity,
       required this.price,
-      required this.code});
+      required this.code,
+      this.total=0.00
+      });
 }

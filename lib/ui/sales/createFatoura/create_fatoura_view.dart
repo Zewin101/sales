@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sales/base.dart';
 import 'package:sales/styles/colors.dart';
-import 'package:sales/ui/sales/sales_screen_Naviagator.dart';
-import 'package:sales/ui/sales/sales_screen_ViewModel.dart';
 
-import '../../models/InvoiceItem.dart';
+import 'create_fatoura_Naviagator.dart';
+import 'create_fatoura_ViewModel.dart';
 
 class Sales_Screen_View extends StatefulWidget {
   static const String routeName = 'sales_Screen';
@@ -20,6 +19,7 @@ class _Sales_ViewState
   final TextEditingController quantityController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
+  double totalDoub = 0.0;
   var formKey = GlobalKey<FormState>();
 
   void initState() {
@@ -30,6 +30,12 @@ class _Sales_ViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          onPressed: (){
+
+          },
+        child: Icon(Icons.add),
+      ),
         appBar: AppBar(
           title: Text(
             "Rodina kids",
@@ -79,7 +85,10 @@ class _Sales_ViewState
                               }
                             },
                             controller: codeController,
-                            decoration: InputDecoration(labelText: 'code'),
+                            decoration: const InputDecoration(
+                                labelText: 'code',
+                            suffixIcon: Icon(Icons.qr_code_2),
+                            ),
                             keyboardType: TextInputType.number,
                           ),
                         ),
@@ -127,6 +136,73 @@ class _Sales_ViewState
                       ],
                     )),
               ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+
+                  columns: const [
+                    DataColumn(
+
+                      label: Text(
+                        'No.',
+                        style: TextStyle(fontStyle: FontStyle.normal),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Product',
+                        style: TextStyle(fontStyle: FontStyle.normal),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Quantity',
+                        style: TextStyle(fontStyle: FontStyle.normal),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Price ',
+                        style: TextStyle(fontStyle: FontStyle.normal),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'code',
+                        style: TextStyle(fontStyle: FontStyle.normal),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Total',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal, color: Colors.red),
+                      ),
+                    ),
+                  ],
+                  rows: viewModel.addInvoiceInRowInTheTable(),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+
+                    'Total: ',
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Text(
+                    /// Multiply all values of price and quantity to get the total
+                    ' ${viewModel.listInvoiceItem.fold(0.0, (sum, invoice) => (sum + invoice.quantity * invoice.price).toDouble())} ',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 32,
+                    ),
+
+                  ),
+                ],
+              ),
             ]),
           ),
         ));
@@ -138,12 +214,20 @@ class _Sales_ViewState
   }
 
   void validInvoice() {
+
     if (formKey.currentState!.validate()) {
-      viewModel.addInvoice(
-          productController.text,
-          int.parse(quantityController.text),
-          double.parse(priceController.text),
-          int.parse(codeController.text));
+      int quantityInt = int.parse(quantityController.text);
+      double priceDoub = double.parse(priceController.text);
+      int codeInt = int.parse(codeController.text);
+      totalDoub = priceDoub * quantityInt;
+      viewModel.createInvoice(
+
+          product: productController.text,
+          quantity: quantityInt,
+          price: priceDoub,
+          code: codeInt,
+          total: totalDoub);
+      setState(() {});
       productController.clear();
       quantityController.clear();
       priceController.clear();
