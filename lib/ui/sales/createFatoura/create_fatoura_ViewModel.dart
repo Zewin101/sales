@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sales/base.dart';
 import 'package:sales/models/InvoiceItem.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 
-import 'create_fatoura_Naviagator.dart';
+
 
 class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
   late List<InvoiceItem> listInvoiceItem = [];
@@ -22,6 +23,7 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
         product: product, quantity: quantity, price: price, code: code,total: total));
 ///add to firebase
     addInvoiceInRowInTheTable();
+
   }
 
   List<DataRow> addInvoiceInRowInTheTable() {
@@ -33,10 +35,20 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
               DataCell(Text(item.price.toString())),
               DataCell(Text(item.code.toString())),
               DataCell(Text(item.total.toString())),
-            ]))
+            ],
+
+    ),
+
+
+    )
         .toList();
     return data;
   }
 
 
+}
+
+
+abstract class Sales_Navigator extends BaseNavigator{
+void saveInvoice();
 }

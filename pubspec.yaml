@@ -24,6 +24,7 @@ dependencies:
   awesome_dialog: ^3.0.2
   intl: ^0.17.0
   flutter_speed_dial: ^6.2.0
+  pdf: ^3.9.0
 
 
 dev_dependencies:

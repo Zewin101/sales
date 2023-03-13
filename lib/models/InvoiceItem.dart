@@ -1,4 +1,5 @@
 class InvoiceItem {
+static  const String COLLECTION='INVOICE';
   int? id;
   String product;
   int quantity;
@@ -14,4 +15,22 @@ class InvoiceItem {
       required this.code,
       this.total=0.00
       });
+
+InvoiceItem.fromJson(Map<String, dynamic> json):this(
+  id: json['id'],
+  product: json['product'],
+  quantity: json['quantity'],
+  price: json['price'],
+  code: json['code'],
+  total: json['total'],
+);
+
+Map<String, dynamic> toJson() => {
+  'id': id,
+  'product': product,
+  'quantity': quantity,
+  'price': price,
+  'code': code,
+  'total': total,
+};
 }

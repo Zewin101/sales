@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sales/base.dart';
 import 'package:sales/styles/colors.dart';
+import 'package:sales/ui/sales/invoices/invoices_View.dart';
 
-import 'create_fatoura_Naviagator.dart';
 import 'create_fatoura_ViewModel.dart';
 
 class Sales_Screen_View extends StatefulWidget {
@@ -31,181 +31,180 @@ class _Sales_ViewState
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-          onPressed: (){
-
-          },
-        child: Icon(Icons.add),
+        onPressed: () {
+          saveInvoice();
+        },
+        child: Icon(Icons.save),
       ),
-        appBar: AppBar(
-          title: Text(
-            "Rodina kids",
-            style: Theme.of(context).textTheme.headline1,
-          ),
+      appBar: AppBar(
+        title: Text(
+          "Rodina kids",
+          style: Theme.of(context).textTheme.headline1,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(children: [
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Form(
-                  key: formKey,
-                  child: Column(children: <Widget>[
-                    TextFormField(
-                      validator: (value) {
-                        if (value!.trim().isEmpty || value.trim() == '') {
-                          return "Enter Product";
-                        }
-                      },
-                      controller: productController,
-                      decoration: InputDecoration(labelText: 'Product'),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value!.trim().isEmpty || value.trim() == '') {
-                                return "Enter Quantity";
-                              }
-                            },
-                            controller: quantityController,
-                            decoration: InputDecoration(labelText: 'Quantity'),
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value!.trim().isEmpty || value.trim() == '') {
-                                return "Enter code";
-                              }
-                            },
-                            controller: codeController,
-                            decoration: const InputDecoration(
-                                labelText: 'code',
-                            suffixIcon: Icon(Icons.qr_code_2),
-                            ),
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                      ],
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value!.trim().isEmpty || value.trim() == '') {
-                          return "Enter Price";
-                        }
-                      },
-                      controller: priceController,
-                      decoration: InputDecoration(labelText: 'Price'),
-                      keyboardType: TextInputType.number,
-                    ),
-                    SizedBox(height: 10.0),
-                  ]),
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * .07,
-                child: ElevatedButton(
-                    onPressed: () {
-                      validInvoice();
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(children: [
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Form(
+                key: formKey,
+                child: Column(children:[
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.trim().isEmpty || value.trim() == '') {
+                        return "Enter Product";
+                      }
                     },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(RODINACOLOR),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Add Invoice ",
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Icon(Icons.keyboard_double_arrow_down),
-                      ],
-                    )),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-
-                  columns: const [
-                    DataColumn(
-
-                      label: Text(
-                        'No.',
-                        style: TextStyle(fontStyle: FontStyle.normal),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Product',
-                        style: TextStyle(fontStyle: FontStyle.normal),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Quantity',
-                        style: TextStyle(fontStyle: FontStyle.normal),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Price ',
-                        style: TextStyle(fontStyle: FontStyle.normal),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'code',
-                        style: TextStyle(fontStyle: FontStyle.normal),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Total',
-                        style: TextStyle(
-                            fontStyle: FontStyle.normal, color: Colors.red),
-                      ),
-                    ),
-                  ],
-                  rows: viewModel.addInvoiceInRowInTheTable(),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-
-                    'Total: ',
-                    style: Theme.of(context).textTheme.headline2,
+                    controller: productController,
+                    decoration: InputDecoration(labelText: 'Product'),
                   ),
-                  Text(
-                    /// Multiply all values of price and quantity to get the total
-                    ' ${viewModel.listInvoiceItem.fold(0.0, (sum, invoice) => (sum + invoice.quantity * invoice.price).toDouble())} ',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 32,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.trim().isEmpty || value.trim() == '') {
+                              return "Enter Quantity";
+                            }
+                          },
+                          controller: quantityController,
+                          decoration: InputDecoration(labelText: 'Quantity'),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.trim().isEmpty || value.trim() == '') {
+                              return "Enter code";
+                            }
+                            return null;
+                          },
+                          controller: codeController,
+                          decoration: const InputDecoration(
+                            labelText: 'code',
+                            suffixIcon: Icon(Icons.qr_code_2),
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                    ],
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.trim().isEmpty || value.trim() == '') {
+                        return "Enter Price";
+                      }
+                    },
+                    controller: priceController,
+                    decoration: InputDecoration(labelText: 'Price'),
+                    keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(height: 10.0),
+                ]),
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * .07,
+              child: ElevatedButton(
+                  onPressed: () {
+                    validInvoice();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(RODINACOLOR),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Add Invoice ",
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      Icon(Icons.keyboard_double_arrow_down),
+                    ],
+                  )),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columns: const [
+                  DataColumn(
+                    label: Text(
+                      'No.',
+                      style: TextStyle(fontStyle: FontStyle.normal),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Product',
+                      style: TextStyle(fontStyle: FontStyle.normal),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Quantity',
+                      style: TextStyle(fontStyle: FontStyle.normal),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Price ',
+                      style: TextStyle(fontStyle: FontStyle.normal),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'code',
+                      style: TextStyle(fontStyle: FontStyle.normal),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Total',
+                      style: TextStyle(
+                          fontStyle: FontStyle.normal, color: Colors.red),
+                    ),
                   ),
                 ],
+                rows: viewModel.addInvoiceInRowInTheTable(),
               ),
-            ]),
-          ),
-        ));
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Total: ',
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                Text(
+                  /// Multiply all values of price and quantity to get the total
+                  ' ${viewModel.listInvoiceItem.fold(0.0, (sum, invoice) => (sum + invoice.quantity * invoice.price).toDouble())} ',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 32,
+                  ),
+                ),
+              ],
+            ),
+
+          ]),
+        ),
+      ),
+    );
   }
 
   @override
@@ -214,14 +213,12 @@ class _Sales_ViewState
   }
 
   void validInvoice() {
-
     if (formKey.currentState!.validate()) {
       int quantityInt = int.parse(quantityController.text);
       double priceDoub = double.parse(priceController.text);
       int codeInt = int.parse(codeController.text);
       totalDoub = priceDoub * quantityInt;
       viewModel.createInvoice(
-
           product: productController.text,
           quantity: quantityInt,
           price: priceDoub,
@@ -233,5 +230,13 @@ class _Sales_ViewState
       priceController.clear();
       codeController.clear();
     }
+  }
+
+  @override
+  void saveInvoice() {
+    Navigator.pushNamed(
+      context, Invoices_View.routeName,
+      // arguments: viewModel.listInvoiceItem
+    );
   }
 }
