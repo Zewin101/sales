@@ -9,20 +9,16 @@ class HomeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.accessibility),label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.accessibility),label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.accessibility),label: ''),
-        ],
-      ),
-      body:screens[currentIndex] ,
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: currentIndex,
+      //   items: [
+      //     BottomNavigationBarItem(icon: Icon(Icons.accessibility),label: ''),
+      //     BottomNavigationBarItem(icon: Icon(Icons.accessibility),label: ''),
+      //     BottomNavigationBarItem(icon: Icon(Icons.accessibility),label: ''),
+      //   ],
+      // ),
+      body:Sales_Screen_View() ,
     );
 
   }
 }
-List<Widget> screens=[
-  Sales_Screen_View(),
-
-];

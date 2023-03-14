@@ -30,16 +30,32 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
     data = listInvoiceItem
         .map((item) => DataRow(cells: [
               DataCell(Text(item.id.toString())),
-              DataCell(Text(item.product)),
-              DataCell(Text(item.quantity.toString())),
-              DataCell(Text(item.price.toString())),
-              DataCell(Text(item.code.toString())),
-              DataCell(Text(item.total.toString())),
+              DataCell(Text(item.product),
+              onTap:(){
+       navigator!.editInvoiceProduct('product', item.product);
+       item.item(product: item.product);
+              }
+              ),
+              DataCell(Text(item.quantity.toString()),
+                  onTap:(){
+               navigator!.editInvoiceQuantity();
+                  }
+              ),
+              DataCell(Text(item.price.toString()),
+                  onTap:(){
+                  navigator!.editInvoiceQuantity();
+                  }
+              ),
+              DataCell(Text(item.code.toString()),
+                  onTap:(){
+                   navigator!.editInvoiceCode();
+                  }
+              ),
+              DataCell(Text(item.total.toString(),style: TextStyle(color: Colors.red,fontWeight: FontWeight.w800),)),
+
             ],
 
     ),
-
-
     )
         .toList();
     return data;
@@ -51,4 +67,10 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
 
 abstract class Sales_Navigator extends BaseNavigator{
 void saveInvoice();
+void editInvoiceProduct(String title, String value);
+void editInvoicePrice();
+void editInvoiceQuantity();
+void editInvoiceCode();
+
+
 }

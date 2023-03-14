@@ -10,5 +10,12 @@ withConverter<InvoiceItem>(
     fromFirestore: (snapshot, options) =>InvoiceItem.fromJson(snapshot.data()!) ,
     toFirestore: (value, options) => value.toJson(),);
   }
+
+  void addInvoiceInFireBaseFirestore(){
+
+  }
+
+
+
 }
 

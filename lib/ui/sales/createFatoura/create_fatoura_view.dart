@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales/base.dart';
+import 'package:sales/shared/componant/componants.dart';
 import 'package:sales/styles/colors.dart';
 import 'package:sales/ui/sales/invoices/invoices_View.dart';
 
@@ -50,7 +51,7 @@ class _Sales_ViewState
               padding: EdgeInsets.all(10.0),
               child: Form(
                 key: formKey,
-                child: Column(children:[
+                child: Column(children: [
                   TextFormField(
                     validator: (value) {
                       if (value!.trim().isEmpty || value.trim() == '') {
@@ -140,6 +141,10 @@ class _Sales_ViewState
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
+                columnSpacing: 20,
+                dividerThickness: 2,
+                sortColumnIndex: 1,
+                sortAscending: true,
                 columns: const [
                   DataColumn(
                     label: Text(
@@ -187,20 +192,22 @@ class _Sales_ViewState
               children: [
                 Text(
                   'Total: ',
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(fontSize: 25),
                 ),
                 Text(
                   /// Multiply all values of price and quantity to get the total
                   ' ${viewModel.listInvoiceItem.fold(0.0, (sum, invoice) => (sum + invoice.quantity * invoice.price).toDouble())} ',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w900,
-                    fontSize: 32,
+                    fontSize: 25,
                   ),
                 ),
               ],
             ),
-
           ]),
         ),
       ),
@@ -229,14 +236,74 @@ class _Sales_ViewState
       quantityController.clear();
       priceController.clear();
       codeController.clear();
+      print(viewModel.listInvoiceItem[0].code);
     }
   }
 
   @override
   void saveInvoice() {
-    Navigator.pushNamed(
-      context, Invoices_View.routeName,
-      // arguments: viewModel.listInvoiceItem
+    Navigator.pushNamed(context, Invoices_View.routeName,
+        arguments: viewModel.listInvoiceItem
+            .map((InvoiceItem) => InvoiceItem)
+            .toList());
+  }
+
+  @override
+  void editInvoiceCode({String message = "Loading..."}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: Container(
+
+            color: RODINACOLOR,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      message,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                  ],
+                ),
+                TextField(
+                  controller: TextEditingController(),
+                  decoration: InputDecoration(
+                    labelText: message,
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
+  }
+
+  @override
+  void editInvoicePrice({String message= "Loading..."}) {
+  //
+
+
+}
+
+  @override
+  void editInvoiceProduct(String title,String value) {
+    showDialog(context: context, builder: (context) {
+     return TextDialogWidget(value: value, title: title);
+    },);
+    setState(() {
+      productController.text=value;
+    });
+
+  }
+
+  @override
+  void editInvoiceQuantity() {
+    // TODO: implement editInvoiceQuantity
   }
 }
