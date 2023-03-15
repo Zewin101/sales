@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sales/layout/home_layout/categoryScreen.dart';
-import 'package:sales/ui/sales/createFatoura/create_fatoura_view.dart';
-
-import '../../models/category.dart';
+import 'category_Screen/categoryScreen.dart';
 
 
 class HomeLayout extends StatefulWidget {
@@ -23,8 +20,5 @@ appBar: AppBar(),
     );
 
   }
-
-
-
 
 }

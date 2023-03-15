@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../models/category.dart';
-import '../../ui/sales/createFatoura/create_fatoura_view.dart';
+import '../../../models/category.dart';
+import '../../../ui/sales/createFatoura/create_fatoura_view.dart';
+
 import 'categoryItem.dart';
+
 
 
 class CategoryScreen extends StatefulWidget {
@@ -34,7 +36,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               itemBuilder: (context, index) {
                 return InkWell(
                     onTap: () {
-                       Navigator.pushNamed(context, Screens[index]);
+                       Navigator.pushNamed(context, screens[index]);
                     },
                     child: CatagoryItem(categorys[index], index));
               },
@@ -47,7 +49,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
 
 }
-List Screens=[
+List<String> screens=[
   Sales_Screen_View.routeName,
   Sales_Screen_View.routeName,
   Sales_Screen_View.routeName,
