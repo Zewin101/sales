@@ -10,6 +10,7 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
   late List<InvoiceItem> listInvoiceItem = [];
   var data;
   int rowCount = 0;
+  late int selectedRow;
 
 
   void createInvoice(
@@ -29,7 +30,14 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
   List<DataRow> addInvoiceInRowInTheTable() {
     data = listInvoiceItem
         .map((item) => DataRow(cells: [
-              DataCell(Text(item.id.toString())),
+              DataCell(Text(item.id.toString()),
+              onLongPress: () {
+                navigator!.editInvoiceProduct('id', item.id.toString());
+
+            print('id==========${item.id}');
+
+              },
+              ),
               DataCell(Text(item.product),
               onTap:(){
        navigator!.editInvoiceProduct('product', item.product);
@@ -55,6 +63,8 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
 
             ],
 
+
+
     ),
     )
         .toList();
@@ -71,6 +81,7 @@ void editInvoiceProduct(String title, String value);
 void editInvoicePrice();
 void editInvoiceQuantity();
 void editInvoiceCode();
+// void removeRowInTable();
 
 
 }

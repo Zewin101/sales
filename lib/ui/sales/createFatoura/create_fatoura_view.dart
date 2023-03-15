@@ -22,6 +22,7 @@ class _Sales_ViewState
   final TextEditingController codeController = TextEditingController();
   double totalDoub = 0.0;
   var formKey = GlobalKey<FormState>();
+  late int selectedRow;
 
   void initState() {
     super.initState();
@@ -184,7 +185,9 @@ class _Sales_ViewState
                     ),
                   ),
                 ],
+
                 rows: viewModel.addInvoiceInRowInTheTable(),
+
               ),
             ),
             Row(
@@ -255,7 +258,6 @@ class _Sales_ViewState
       builder: (context) {
         return Center(
           child: Container(
-
             color: RODINACOLOR,
             child: Column(
               children: [
@@ -285,21 +287,21 @@ class _Sales_ViewState
   }
 
   @override
-  void editInvoicePrice({String message= "Loading..."}) {
-  //
-
-
-}
+  void editInvoicePrice({String message = "Loading..."}) {
+    //
+  }
 
   @override
-  void editInvoiceProduct(String title,String value) {
-    showDialog(context: context, builder: (context) {
-     return TextDialogWidget(value: value, title: title);
-    },);
+  void editInvoiceProduct(String title, String value) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return TextDialogWidget(value: value, title: title);
+      },
+    );
     setState(() {
-      productController.text=value;
+      productController.text = value;
     });
-
   }
 
   @override

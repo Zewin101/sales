@@ -2,7 +2,13 @@
 class Assets {
   Assets._();
 
+  static const String imageBackground = 'assets/image/Background.png';
   static const String imageBarcod = 'assets/image/barcod.ico';
+  static const String imageCustomer = 'assets/image/customer.png';
+  static const String imagePurchase = 'assets/image/purchase.png';
+  static const String imagePurchasing = 'assets/image/purchasing.png';
+  static const String imageRating = 'assets/image/rating.png';
   static const String imageSplash = 'assets/image/splash.jpg';
+  static const String imageStore = 'assets/image/store.png';
 
 }
