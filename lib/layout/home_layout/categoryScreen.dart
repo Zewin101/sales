@@ -52,4 +52,5 @@ List Screens=[
   Sales_Screen_View.routeName,
   Sales_Screen_View.routeName,
   Sales_Screen_View.routeName,
+  Sales_Screen_View.routeName,
 ];
