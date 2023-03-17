@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sales/base.dart';
 import 'package:sales/shared/componant/componants.dart';
 import 'package:sales/styles/colors.dart';
-import 'package:sales/ui/sales/invoices/invoices_View.dart';
-
+import '../invoices/invoices_View.dart';
 import 'create_fatoura_ViewModel.dart';
 
 class Sales_Screen_View extends StatefulWidget {
@@ -17,9 +18,10 @@ class _Sales_ViewState
     extends BaseView<Sales_Screen_View, Sales_Screen_ViewModel>
     implements Sales_Navigator {
   final TextEditingController productController = TextEditingController();
-  final TextEditingController quantityController = TextEditingController();
+  TextEditingController quantityController = TextEditingController(text: "1");
   final TextEditingController priceController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
+
   double totalDoub = 0.0;
   var formKey = GlobalKey<FormState>();
   late int selectedRow;
@@ -33,10 +35,8 @@ class _Sales_ViewState
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          saveInvoice();
-        },
-        child: Icon(Icons.save),
+        onPressed: () {},
+        child: Icon(Icons.add),
       ),
       appBar: AppBar(
         title: Text(
@@ -48,6 +48,29 @@ class _Sales_ViewState
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DefaultElevatedButton(widgets: [
+                  Icon(Icons.arrow_back_ios),
+                ], onPressed: () {}),
+                const SizedBox(
+                  width: 5,
+                ),
+                DefaultElevatedButton(widgets: [
+                  Text('Invoice No 00001'),
+                ], onPressed: () {}),
+                const SizedBox(
+                  width: 5,
+                ),
+                DefaultElevatedButton(widgets: [
+                  Icon(Icons.arrow_forward_ios),
+                ], onPressed: () {}),
+              ],
+            ),
+            Divider(
+              thickness: 2,
+            ),
             Padding(
               padding: EdgeInsets.all(10.0),
               child: Form(
@@ -66,6 +89,13 @@ class _Sales_ViewState
                     children: [
                       Expanded(
                         child: TextFormField(
+                          onTap: () {
+                            quantityController.selection = TextSelection(
+                                baseOffset: 0,
+                                extentOffset: quantityController.text.length);
+
+                            // quantityController.clear();
+                          },
                           validator: (value) {
                             if (value!.trim().isEmpty || value.trim() == '') {
                               return "Enter Quantity";
@@ -76,11 +106,14 @@ class _Sales_ViewState
                           keyboardType: TextInputType.number,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
                         child: TextFormField(
+                          onTap: () async {
+                            await scanQRCode();
+                          },
                           validator: (value) {
                             if (value!.trim().isEmpty || value.trim() == '') {
                               return "Enter code";
@@ -113,31 +146,17 @@ class _Sales_ViewState
             ),
             Container(
               height: MediaQuery.of(context).size.height * .07,
-              child: ElevatedButton(
+              child: DefaultElevatedButton(
+                  widgets: [
+                    Text(
+                      "Add Invoice ",
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    const Icon(Icons.keyboard_double_arrow_down),
+                  ],
                   onPressed: () {
                     validInvoice();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(RODINACOLOR),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Add Invoice ",
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                      Icon(Icons.keyboard_double_arrow_down),
-                    ],
-                  )),
+                  }),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -185,9 +204,7 @@ class _Sales_ViewState
                     ),
                   ),
                 ],
-
                 rows: viewModel.addInvoiceInRowInTheTable(),
-
               ),
             ),
             Row(
@@ -307,5 +324,22 @@ class _Sales_ViewState
   @override
   void editInvoiceQuantity() {
     // TODO: implement editInvoiceQuantity
+  }
+
+  Future scanQRCode() async {
+    try {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6966', 'Cancel', true, ScanMode.BARCODE);
+
+      if (!mounted) return;
+
+      setState(() {
+        codeController.text = qrCode;
+      });
+      print("QRCode_Result:--");
+      print(qrCode);
+    } on PlatformException {
+      codeController.text = '';
+    }
   }
 }

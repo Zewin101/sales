@@ -1,20 +1,23 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sales/screens/sales/createFatoura/create_fatoura_view.dart';
+import 'package:sales/screens/sales/invoices/invoices_View.dart';
+import 'package:sales/screens/sales/scanner.dart';
+import 'package:sales/screens/splash/splash_screen.dart';
 import 'package:sales/styles/myTheme.dart';
-import 'package:sales/ui/sales/createFatoura/create_fatoura_view.dart';
-import 'package:sales/ui/sales/invoices/invoices_View.dart';
-
-import 'package:sales/ui/splash/splash_screen.dart';
-
-
 import 'firebase_options.dart';
-import 'layout/home_layout/home_layout.dart';
+import 'layout/home_layout/home_layout/home_layout.dart';
 
-void main()async {
+ void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
+  Platform.isAndroid||Platform.isIOS? await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ):Container();
+
+
   runApp(MyApp());
 }
 
@@ -29,6 +32,8 @@ class MyApp extends StatelessWidget {
         Splash_Screen.routeName: (context) => Splash_Screen(),
         Sales_Screen_View.routeName: (context) => Sales_Screen_View(),
         Invoices_View.routeName: (context) => Invoices_View(),
+
+
       },
       theme: MyThemeData.lightTheme,
       darkTheme: MyThemeData.darkTheme,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sales/base.dart';
 import 'package:sales/styles/colors.dart';
-import 'package:sales/ui/sales/invoices/invoices_ViewModel.dart';
+
 
 import '../../../models/InvoiceItem.dart';
+import 'invoices_ViewModel.dart';
 
 class Invoices_View extends StatefulWidget {
   Invoices_View({Key? key}) : super(key: key);

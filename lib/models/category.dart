@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales/generated/assets.dart';
+import 'package:sales/styles/colors.dart';
 
 class CategoryData {
 
@@ -11,11 +12,11 @@ class CategoryData {
 
   static List<CategoryData> getCategoryData() {
     return [
-      CategoryData( 'العملاء', Assets.imageCustomer, Color(0xFFC99852)),
-      CategoryData( 'المبيعات', Assets.imagePurchase, Color(0xFFCF7E48)),
-      CategoryData( 'التقارير', Assets.imageRating, Color(0xFF003E90)),
-      CategoryData( 'المخزون', Assets.imageStore, Color(0xFFED1E79)),
-      CategoryData( 'المشتريات', Assets.imagePurchasing, Color(0xFFED1E79)),
+      CategoryData( 'العملاء', Assets.imageCustomer, CATCOLOR),
+      CategoryData( 'المبيعات', Assets.imagePurchase, CATCOLOR2),
+      CategoryData( 'التقارير', Assets.imageRating, CATCOLOR3),
+      CategoryData( 'المخزون', Assets.imageStore, CATCOLOR4),
+      CategoryData( 'المشتريات', Assets.imagePurchasing,CATCOLOR5),
     ];
   }
 }

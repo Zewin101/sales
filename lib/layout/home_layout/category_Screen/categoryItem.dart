@@ -1,9 +1,6 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../models/category.dart';
-
-
 
 class CatagoryItem extends StatelessWidget {
   CategoryData categoryData;
@@ -13,23 +10,32 @@ class CatagoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Radius itemsRadiusLeft = index.isEven ? Radius.circular(25) : Radius.zero;
+    Radius itemsRadiusRight = index.isOdd ? Radius.circular(25) : Radius.zero;
     return Container(
       decoration: BoxDecoration(
         color: categoryData.color,
         borderRadius: BorderRadius.only(
-            topRight: Radius.circular(25),
-            bottomLeft: index.isEven ? Radius.circular(25) : Radius.zero,
-            topLeft: Radius.circular(25),
-            bottomRight: index.isOdd ? Radius.circular(25) : Radius.zero),
+            topRight: const Radius.circular(25),
+            bottomLeft: index != 1 && index != 4 && index != 7 && index != 10
+                ? itemsRadiusLeft
+                : const Radius.circular(25),
+            topLeft: const Radius.circular(25),
+            bottomRight: index != 1 && index != 4 && index != 7 && index != 10
+                ? itemsRadiusRight
+                : Radius.circular(25)),
       ),
       child: Column(
         children: [
           SizedBox(
             height: 15,
           ),
-          Image.asset(
-            categoryData.image,
-            height: 80,
+          Expanded(
+            child: Image.asset(
+              categoryData.image,
+              height: 30,
+              fit: BoxFit.fill,
+            ),
           ),
           SizedBox(
             height: 5,
@@ -37,7 +43,7 @@ class CatagoryItem extends StatelessWidget {
           Text(
             categoryData.title,
             style: TextStyle(
-                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           )
         ],
       ),

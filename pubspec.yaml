@@ -25,6 +25,10 @@ dependencies:
   intl: ^0.17.0
   flutter_speed_dial: ^6.2.0
   pdf: ^3.9.0
+  syncfusion_flutter_barcodes: ^20.4.54
+  qrscan: ^0.3.3
+  camera: ^0.10.3+2
+  flutter_barcode_scanner: ^2.0.0
 
 
 

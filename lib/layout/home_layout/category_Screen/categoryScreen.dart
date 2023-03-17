@@ -1,8 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-
 import '../../../models/category.dart';
-import '../../../ui/sales/createFatoura/create_fatoura_view.dart';
-
+import '../../../screens/sales/createFatoura/create_fatoura_view.dart';
 import 'categoryItem.dart';
 
 
@@ -15,6 +14,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+
   @override
   Widget build(BuildContext context) {
     var categorys = CategoryData.getCategoryData();
@@ -28,10 +28,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
           Expanded(
             child: GridView.builder(
               itemCount: categorys.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 10,
+              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount:Platform.isWindows?5:3,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 8,
               ),
               itemBuilder: (context, index) {
                 return InkWell(
