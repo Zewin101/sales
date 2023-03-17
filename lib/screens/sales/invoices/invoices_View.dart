@@ -60,23 +60,7 @@ class _Invoices_ViewState extends BaseView<Invoices_View, Invoices_ViewMode>
                               ' ${v.fold(0.0, (sum, invoice) => (sum + invoice.quantity * invoice.price).toDouble())} ',
                               style: Theme.of(context).textTheme.headline1,
                             )),
-                            // Text(
-                            //   v[index].id.toString(),
-                            //   style: Theme.of(context).textTheme.headline1,
-                            // ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            //   children: [
-                            //     Text(
-                            //       v[index].code.toString(),
-                            //       style: Theme.of(context).textTheme.headline1,
-                            //     ),
-                            //     Text(
-                            //       v[index].total.toString(),
-                            //       style: Theme.of(context).textTheme.headline1,
-                            //     ),
-                            //   ],
-                            // ),
+
                           ],
                         ),
                       ),

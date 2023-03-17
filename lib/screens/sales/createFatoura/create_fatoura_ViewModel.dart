@@ -37,7 +37,6 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
                 Text(item.id.toString()),
                 onLongPress: () {
                   navigator!.editInvoiceProduct('id', item.id.toString());
-
                   print('id==========${item.id}');
                 },
               ),
@@ -77,6 +76,8 @@ abstract class Sales_Navigator extends BaseNavigator {
   void editInvoiceQuantity();
 
   void editInvoiceCode();
+  void numberPlusInvoice();
+  void numberMinasInvoice();
 
 // void removeRowInTable();
 

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sales/base.dart';
+import 'package:sales/json/jsonP.dart';
 import 'package:sales/shared/componant/componants.dart';
 import 'package:sales/styles/colors.dart';
 import '../invoices/invoices_View.dart';
@@ -21,6 +24,7 @@ class _Sales_ViewState
   TextEditingController quantityController = TextEditingController(text: "1");
   final TextEditingController priceController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
+  int InvoiceNo = 100001;
 
   double totalDoub = 0.0;
   var formKey = GlobalKey<FormState>();
@@ -35,7 +39,9 @@ class _Sales_ViewState
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+
+        },
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
@@ -51,21 +57,35 @@ class _Sales_ViewState
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                DefaultElevatedButton(widgets: [
-                  Icon(Icons.arrow_back_ios),
-                ], onPressed: () {}),
+                DefaultElevatedButton(
+                    widgets: const [
+                      Icon(Icons.arrow_back_ios),
+                    ],
+                    onPressed: () {
+                      numberMinasInvoice();
+                      setState(() {
+
+                      });
+                    }),
                 const SizedBox(
                   width: 5,
                 ),
                 DefaultElevatedButton(widgets: [
-                  Text('Invoice No 00001'),
+                  Text('Invoice No $InvoiceNo'),
                 ], onPressed: () {}),
                 const SizedBox(
                   width: 5,
                 ),
-                DefaultElevatedButton(widgets: [
-                  Icon(Icons.arrow_forward_ios),
-                ], onPressed: () {}),
+                DefaultElevatedButton(
+                    widgets: [
+                      Icon(Icons.arrow_forward_ios),
+                    ],
+                    onPressed: () {
+                      numberPlusInvoice();
+                      setState(() {
+
+                      });
+                    }),
               ],
             ),
             Divider(
@@ -111,8 +131,12 @@ class _Sales_ViewState
                       ),
                       Expanded(
                         child: TextFormField(
+                          textInputAction:TextInputAction.next ,
                           onTap: () async {
                             await scanQRCode();
+                            setState(() {
+
+                            });
                           },
                           validator: (value) {
                             if (value!.trim().isEmpty || value.trim() == '') {
@@ -169,38 +193,38 @@ class _Sales_ViewState
                   DataColumn(
                     label: Text(
                       'No.',
-                      style: TextStyle(fontStyle: FontStyle.normal),
+                      style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'Product',
-                      style: TextStyle(fontStyle: FontStyle.normal),
+                      style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'Quantity',
-                      style: TextStyle(fontStyle: FontStyle.normal),
+                      style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'Price ',
-                      style: TextStyle(fontStyle: FontStyle.normal),
+                      style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'code',
-                      style: TextStyle(fontStyle: FontStyle.normal),
+                      style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
                   DataColumn(
                     label: Text(
                       'Total',
                       style: TextStyle(
-                          fontStyle: FontStyle.normal, color: Colors.red),
+                          fontStyle: FontStyle.italic, color: Colors.red),
                     ),
                   ),
                 ],
@@ -219,7 +243,8 @@ class _Sales_ViewState
                 ),
                 Text(
                   /// Multiply all values of price and quantity to get the total
-                  ' ${viewModel.listInvoiceItem.fold(0.0, (sum, invoice) => (sum + invoice.quantity * invoice.price).toDouble())} ',
+                  ' ${viewModel.listInvoiceItem.fold(0.0, (sum, invoice) =>
+                      (sum + invoice.quantity * invoice.price).toDouble())} ',
                   style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w900,
@@ -253,11 +278,12 @@ class _Sales_ViewState
           total: totalDoub);
       setState(() {});
       productController.clear();
-      quantityController.clear();
+      quantityController.text='1';
       priceController.clear();
       codeController.clear();
       print(viewModel.listInvoiceItem[0].code);
     }
+
   }
 
   @override
@@ -327,19 +353,72 @@ class _Sales_ViewState
   }
 
   Future scanQRCode() async {
-    try {
-      final qrCode = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6966', 'Cancel', true, ScanMode.BARCODE);
+    if(!Platform.isWindows){
+      try {
 
-      if (!mounted) return;
+        final qrCode = await FlutterBarcodeScanner.scanBarcode(
+            '#ff6966', 'Cancel', true, ScanMode.QR);
 
-      setState(() {
-        codeController.text = qrCode;
-      });
-      print("QRCode_Result:--");
-      print(qrCode);
-    } on PlatformException {
-      codeController.text = '';
+        if (!mounted) return;
+
+        setState(() {
+          codeController.text = qrCode;
+          for(int i=0;i<jsonp.length;i++){
+            if(jsonp[i][0]==int.parse(codeController.text)){
+              productController.text=jsonp[i][1];
+              priceController.text=jsonp[i][2].toString();
+              validInvoice();
+              productController.clear();
+              quantityController.text='1';
+              priceController.clear();
+              codeController.clear();
+              return;
+
+            }
+          }
+
+        });
+        print("QRCode_Result:--");
+        print(qrCode);
+      } on PlatformException {
+        codeController.text = '';
+      }
     }
+    else{
+      try {
+
+        setState(() {
+          for(int i=0;i<jsonp.length;i++){
+            if(jsonp[i][0]==int.parse(codeController.text)){
+              productController.text=jsonp[i][1];
+              priceController.text=jsonp[i][2].toString();
+              validInvoice();
+              productController.clear();
+              quantityController.text='1';
+              priceController.clear();
+              codeController.clear();
+              return;
+            }
+          }
+
+        });
+        print("QRCode_Result:--");
+      } on PlatformException {
+        codeController.text = '';
+      }
+    }
+
+  }
+
+  @override
+  void numberMinasInvoice() {
+    if (InvoiceNo > 100001) {
+      InvoiceNo--;
+    }
+  }
+
+  @override
+  void numberPlusInvoice() {
+    InvoiceNo++;
   }
 }

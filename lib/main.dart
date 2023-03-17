@@ -1,11 +1,10 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sales/screens/sales/createFatoura/create_fatoura_view.dart';
 import 'package:sales/screens/sales/invoices/invoices_View.dart';
-import 'package:sales/screens/sales/scanner.dart';
 import 'package:sales/screens/splash/splash_screen.dart';
 import 'package:sales/styles/myTheme.dart';
 import 'firebase_options.dart';

@@ -10,6 +10,8 @@ class Assets {
   static const String imagePurchasing = 'assets/image/purchasing.png';
   static const String imageRating = 'assets/image/rating.png';
   static const String imageSplash = 'assets/image/splash.jpg';
+  static const String imageSplash2 = 'assets/image/splash2.svg';
+  static const String imageSplash3 = 'assets/image/splash3.png';
   static const String imageStore = 'assets/image/store.png';
 
 }
