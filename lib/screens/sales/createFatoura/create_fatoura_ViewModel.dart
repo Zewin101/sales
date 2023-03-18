@@ -64,6 +64,13 @@ class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {
         .toList();
     return data;
   }
+
+
+
+
+
+
+
 }
 
 abstract class Sales_Navigator extends BaseNavigator {

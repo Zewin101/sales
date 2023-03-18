@@ -17,6 +17,7 @@ class CategoryData {
       CategoryData( 'التقارير', Assets.imageRating, CATCOLOR3),
       CategoryData( 'المخزون', Assets.imageStore, CATCOLOR4),
       CategoryData( 'المشتريات', Assets.imagePurchasing,CATCOLOR5),
+      CategoryData( 'المنتجات', Assets.imageProducts,CATCOLOR6),
     ];
   }
 }

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 import '../../styles/colors.dart';
@@ -48,9 +50,12 @@ class _TextDialogWidgetState extends State<TextDialogWidget> {
 class DefaultElevatedButton extends StatelessWidget {
   List<Widget> widgets;
 Function onPressed;
+Color? color;
 
 
-DefaultElevatedButton({super.key, required this.widgets, required this.onPressed});
+
+
+DefaultElevatedButton({this.color, required this.widgets, required this.onPressed});
 
 
   @override

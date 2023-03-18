@@ -2,20 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sales/models/InvoiceItem.dart';
 
-class FirebaseUtils{
+import '../../../models/prodacts_model.dart';
 
-  CollectionReference<InvoiceItem> getCollection(){
-return FirebaseFirestore.instance.collection(InvoiceItem.COLLECTION).
-withConverter<InvoiceItem>(
-    fromFirestore: (snapshot, options) =>InvoiceItem.fromJson(snapshot.data()!) ,
-    toFirestore: (value, options) => value.toJson(),);
+class FirebaseUtils {
+  CollectionReference<Products_Model> getProductsCollection() {
+    return FirebaseFirestore.instance
+        .collection(Products_Model.COLLECTION_NAME)
+        .withConverter<Products_Model>(
+          fromFirestore: (snapshot, options) =>
+              Products_Model.fromJson(snapshot.data()!),
+          toFirestore: (value, options) => value.toJson(),
+        );
   }
 
-  void addInvoiceInFireBaseFirestore(){
-
+  void addInvoiceInFireBaseFirestore(Products_Model product) {
+    var collection = getProductsCollection();
+    var docRef = collection.doc();
+    product.id = docRef.id;
   }
-
-
-
 }
-

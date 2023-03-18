@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:sales/shared/componant/componants.dart';
 import 'package:sales/styles/colors.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -29,6 +31,7 @@ class _DrawerState extends State<DrawerScreen> {
             color: Colors.white,
             thickness: 2,
           ),
+          DefaultElevatedButton(widgets: [Text('')], onPressed: (){})
 
         ],
       ),

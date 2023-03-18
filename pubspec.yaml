@@ -29,6 +29,8 @@ dependencies:
   qrscan: ^0.3.3
   camera: ^0.10.3+2
   flutter_barcode_scanner: ^2.0.0
+  image_picker: ^0.8.7
+  file_picker: ^5.2.6
 
 
 

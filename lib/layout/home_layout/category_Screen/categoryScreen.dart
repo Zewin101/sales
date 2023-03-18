@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../models/category.dart';
+import '../../../screens/customer/customer_View.dart';
+import '../../../screens/products/products_View.dart';
+import '../../../screens/reports/reports_View.dart';
 import '../../../screens/sales/createFatoura/create_fatoura_view.dart';
 import 'categoryItem.dart';
 
@@ -50,9 +53,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
 }
 List<String> screens=[
+  Customer_View.routeName,
+  Sales_Screen_View.routeName,
+  Reports_View.routeName,
   Sales_Screen_View.routeName,
   Sales_Screen_View.routeName,
-  Sales_Screen_View.routeName,
-  Sales_Screen_View.routeName,
-  Sales_Screen_View.routeName,
+  Products_View.routeName,
 ];
