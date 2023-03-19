@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../styles/colors.dart';
@@ -7,41 +5,64 @@ import '../../styles/colors.dart';
 class TextDialogWidget extends StatefulWidget {
   String value;
   String title;
+  Function? dialogFunction;
+  TextEditingController? dialogController=TextEditingController();
 
-  TextDialogWidget({required this.value, required this.title});
+  TextDialogWidget({required this.value, required this.title,this.dialogController,this.dialogFunction});
 
   @override
   State<TextDialogWidget> createState() => _TextDialogWidgetState();
 }
 
 class _TextDialogWidgetState extends State<TextDialogWidget> {
-  late TextEditingController controller;
+  late TextEditingController dialogController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller = TextEditingController(text: widget.value);
+    dialogController = TextEditingController(text: widget.value);
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.title),
+      title: Text(widget.title,
+      style: Theme.of(context).textTheme.subtitle1,
+      ),
       content: TextField(
         keyboardType: TextInputType.text,
-        controller: controller,
+        controller: dialogController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
         ),
       ),
       actions: [
-        ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop(controller.text);
-              setState(() {});
-            },
-            child: Text('Done'))
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: DefaultElevatedButton(
+                  widgets: [
+                    Text(
+                      textAlign: TextAlign.center,
+                      "save ",
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ],
+                  onPressed: (){
+                    widget.dialogFunction!();
+                    Navigator.pop(context);
+                    setState(() {
+
+                    });
+
+                  }),
+            ),
+          ],
+        )
       ],
     );
   }
@@ -49,14 +70,11 @@ class _TextDialogWidgetState extends State<TextDialogWidget> {
 
 class DefaultElevatedButton extends StatelessWidget {
   List<Widget> widgets;
-Function onPressed;
-Color? color;
+  Function onPressed;
+  Color? color;
 
-
-
-
-DefaultElevatedButton({this.color, required this.widgets, required this.onPressed});
-
+  DefaultElevatedButton(
+      {this.color, required this.widgets, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +92,7 @@ DefaultElevatedButton({this.color, required this.widgets, required this.onPresse
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children:
-     widgets
-
-      ),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: widgets),
     );
   }
 }

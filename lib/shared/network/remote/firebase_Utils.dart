@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:sales/models/InvoiceItem.dart';
-
-import '../../../models/prodacts_model.dart';
+import '../../../screens/products/models_products/prodacts_model.dart';
 
 class FirebaseUtils {
   CollectionReference<Products_Model> getProductsCollection() {

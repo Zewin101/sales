@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../../../models/category.dart';
+import '../../layout_model/category.dart';
 import '../../../screens/customer/customer_View.dart';
 import '../../../screens/products/products_View.dart';
 import '../../../screens/reports/reports_View.dart';

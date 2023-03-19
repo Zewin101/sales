@@ -3,7 +3,7 @@ import 'package:sales/base.dart';
 import 'package:sales/styles/colors.dart';
 
 
-import '../../../models/InvoiceItem.dart';
+import '../sales_models/InvoiceItem.dart';
 import 'invoices_ViewModel.dart';
 
 class Invoices_View extends StatefulWidget {

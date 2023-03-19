@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sales/base.dart';
-import 'package:sales/models/InvoiceItem.dart';
+import 'package:sales/screens/sales/sales_models/InvoiceItem.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class Sales_Screen_ViewModel extends BaseViewModel<Sales_Navigator> {

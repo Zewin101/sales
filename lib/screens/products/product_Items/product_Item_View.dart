@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sales/base.dart';
-import 'package:sales/generated/assets.dart';
+
 import 'package:sales/screens/products/product_Items/product_Item_ViewModel.dart';
 import 'package:sales/styles/colors.dart';
 import '../../../shared/componant/componants.dart';
@@ -21,24 +21,20 @@ class product_Item_View extends StatefulWidget {
 class _product_Item_ViewState
     extends BaseView<product_Item_View, Products_Item_ViewModel>
     implements Products_Item_Naivagator {
-  var nameController = TextEditingController();
-  var codeController = TextEditingController();
-  var priceController = TextEditingController();
-  var quantityController = TextEditingController();
-  var totalController = TextEditingController();
   File? image;
+  late String dropdownValue;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     viewModel.navigator = this;
+    dropdownValue = viewModel.categoryProductsItems[0];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white70,
       appBar: AppBar(
         title: Text('New Product'),
         leading: IconButton(
@@ -98,13 +94,13 @@ class _product_Item_ViewState
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
                   onTap: () {
-                    nameController.selection = TextSelection(
+                    viewModel.nameController.selection = TextSelection(
                         baseOffset: 0,
-                        extentOffset: nameController.text.length);
+                        extentOffset: viewModel.nameController.text.length);
                   },
-                  controller: nameController,
+                  controller: viewModel.nameController,
                   decoration: const InputDecoration(
-                    hintText: 'Name *',
+                    labelText: 'Name *',
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                       color: RODINACOLOR,
@@ -129,13 +125,14 @@ class _product_Item_ViewState
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.next,
                         onTap: () {
-                          codeController.selection = TextSelection(
+                          viewModel.codeController.selection = TextSelection(
                               baseOffset: 0,
-                              extentOffset: codeController.text.length);
+                              extentOffset:
+                                  viewModel.codeController.text.length);
                         },
-                        controller: codeController,
+                        controller: viewModel.codeController,
                         decoration: const InputDecoration(
-                          hintText: 'code *',
+                          labelText: 'code *',
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                             color: RODINACOLOR,
@@ -169,6 +166,63 @@ class _product_Item_ViewState
               const SizedBox(
                 height: 25,
               ),
+
+              ///dropDown----------------
+              // DropdownButtonFormField(
+              //     decoration: const InputDecoration(
+              //       hintText: 'code *',
+              //       focusedBorder: OutlineInputBorder(
+              //           borderSide: BorderSide(
+              //             color: RODINACOLOR,
+              //           )),
+              //       enabledBorder: OutlineInputBorder(
+              //           borderSide: BorderSide(
+              //             color: RODINACOLOR,
+              //           )),
+              //     ),
+              //     value: dropdownValue,
+              //     items: viewModel.categoryProductsItems
+              //         .map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (String? newValue) {
+              //       setState(() {
+              //         dropdownValue = newValue!;
+              //       });
+              //     }),
+              ///dropDown----------------
+              Container(
+                height: 45,
+                child: TextFormField(
+                  readOnly: true,
+                  keyboardType: TextInputType.none,
+                  cursorColor: Colors.redAccent,
+                  onTap: () {
+                    ShowBottomSheet();
+
+                    setState(() {});
+                  },
+                  controller: viewModel.categoryController,
+                  decoration: const InputDecoration(
+                    suffixIcon: Icon(Icons.arrow_drop_down),
+                    labelText: 'Category',
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: RODINACOLOR,
+                    )),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: RODINACOLOR,
+                    )),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
               Row(
                 children: [
                   Expanded(
@@ -182,25 +236,26 @@ class _product_Item_ViewState
                       height: 45,
                       child: TextFormField(
                         onChanged: (value) {
-                          if (quantityController.text.isEmpty) {
-                            quantityController.text = '1';
+                          if (viewModel.quantityController.text.isEmpty) {
+                            viewModel.quantityController.text = '1';
                             int total = int.parse(value) *
-                                int.parse(quantityController.text);
-                            totalController.text = total.toString();
+                                int.parse(viewModel.quantityController.text);
+                            viewModel.totalController.text = total.toString();
                           } else {
                             int total = int.parse(value) *
-                                int.parse(quantityController.text);
-                            totalController.text = total.toString();
+                                int.parse(viewModel.quantityController.text);
+                            viewModel.totalController.text = total.toString();
                           }
                         },
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.next,
                         onTap: () {
-                          priceController.selection = TextSelection(
+                          viewModel.priceController.selection = TextSelection(
                               baseOffset: 0,
-                              extentOffset: priceController.text.length);
+                              extentOffset:
+                                  viewModel.priceController.text.length);
                         },
-                        controller: priceController,
+                        controller: viewModel.priceController,
                         decoration: const InputDecoration(
                           hintText: '0.00',
                           focusedBorder: OutlineInputBorder(
@@ -233,18 +288,20 @@ class _product_Item_ViewState
                       height: 45,
                       child: TextFormField(
                         onChanged: (value) {
-                          int total = int.parse(priceController.text) *
-                              int.parse(value);
-                          totalController.text = total.toString();
+                          int total =
+                              int.parse(viewModel.priceController.text) *
+                                  int.parse(value);
+                          viewModel.totalController.text = total.toString();
                         },
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.next,
                         onTap: () {
-                          priceController.selection = TextSelection(
+                          viewModel.priceController.selection = TextSelection(
                               baseOffset: 0,
-                              extentOffset: priceController.text.length);
+                              extentOffset:
+                                  viewModel.priceController.text.length);
                         },
-                        controller: quantityController,
+                        controller: viewModel.quantityController,
                         decoration: const InputDecoration(
                           hintText: '1',
                           focusedBorder: OutlineInputBorder(
@@ -282,11 +339,12 @@ class _product_Item_ViewState
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         onTap: () {
-                          totalController.selection = TextSelection(
+                          viewModel.totalController.selection = TextSelection(
                               baseOffset: 0,
-                              extentOffset: totalController.text.length);
+                              extentOffset:
+                                  viewModel.totalController.text.length);
                         },
-                        controller: totalController,
+                        controller: viewModel.totalController,
                         decoration: const InputDecoration(
                           hintText: '0',
                           focusedBorder: OutlineInputBorder(
@@ -338,10 +396,10 @@ class _product_Item_ViewState
 
         setState(() {
           if (qrCode == '-1') {
-            codeController.text = '';
+            viewModel.codeController.text = '';
             print(qrCode);
           } else {
-            codeController.text = qrCode;
+            viewModel.codeController.text = qrCode;
           }
           print(qrCode);
           return;
@@ -355,9 +413,10 @@ class _product_Item_ViewState
   }
 
   Future getFromGallery() async {
-    if (!Platform.isWindows){
+    if (!Platform.isWindows) {
       try {
-        final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+        final image =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
         if (image == null) return;
         final imagePath = File(image.path);
         this.image = imagePath;
@@ -366,8 +425,7 @@ class _product_Item_ViewState
       } on PlatformException catch (e) {
         print('filed to pick image : $e');
       }
-    }
-    else{
+    } else {
       try {
         final image = await FilePicker.platform.pickFiles();
         if (image == null) return;
@@ -379,10 +437,8 @@ class _product_Item_ViewState
         print('filed to pick image : $e');
       }
     }
-
   }
 
-  /// Get from Camera
   Future getFromCamera() async {
     if (!Platform.isWindows) {
       try {
@@ -396,10 +452,7 @@ class _product_Item_ViewState
         print('filed to pick image : $e');
       }
     }
-
-
   }
-
 
   void chooseCameraOrGallery() {
     showDialog(
@@ -411,111 +464,239 @@ class _product_Item_ViewState
               'Select Image source',
               style: Theme.of(context).textTheme.headline1,
             ),
-            content:!Platform.isWindows? Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    await getFromGallery();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent, elevation: 0),
-                  child: Row(
+            content: !Platform.isWindows
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.photo_library_sharp,
-                          color: Colors.white),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Text(
-                        'Gallery',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            ?.copyWith(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await getFromCamera();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent, elevation: 0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.camera, color: Colors.white),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Text(
-                        'Camera',
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Colors.white,
+                      ElevatedButton(
+                        onPressed: () async {
+                          await getFromGallery();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent, elevation: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.photo_library_sharp,
+                                color: Colors.white),
+                            const SizedBox(
+                              width: 30,
                             ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    image = null;
-                    setState(() {});
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent, elevation: 0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.close, color: Colors.white),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Text(
-                        'Delete',
-                        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                              color: Colors.white,
+                            Text(
+                              'Gallery',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(color: Colors.white),
                             ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await getFromCamera();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent, elevation: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.camera, color: Colors.white),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              'Camera',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          image = null;
+                          setState(() {});
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent, elevation: 0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.close, color: Colors.white),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              'Delete',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
-                  ),
-                ),
-              ],
-            ):
-            ElevatedButton(
-              onPressed: () {
-                image = null;
-                setState(()async {
-                  await getFromGallery();
-                });
-
-              },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent, elevation: 0),
-              child: Row(
-                children: [
-                  const Icon(Icons.close, color: Colors.white),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Text(
-                    'choose image',
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                      color: Colors.white,
+                  )
+                : ElevatedButton(
+                    onPressed: () {
+                      image = null;
+                      setState(() async {
+                        await getFromGallery();
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent, elevation: 0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.close, color: Colors.white),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          'choose image',
+                          style:
+                              Theme.of(context).textTheme.subtitle1?.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            )
-            ,
           );
         });
+  }
+
+  @override
+  void ShowBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.35,
+          margin: EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: viewModel.categoryProductsItems.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      color: index.isOdd ? RODINACOLOR2 : RODINACOLOR3,
+                      margin: EdgeInsets.symmetric(vertical: 6),
+                      height: 45,
+                      child: TextFormField(
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.none,
+                        onTap: () {
+                          viewModel.categoryController.text =
+                              viewModel.categoryProductsItems[index];
+                          setState(() {
+                            Navigator.pop(context);
+                          });
+                        },
+                        readOnly:true ,
+                        controller: TextEditingController(
+                            text: viewModel.categoryProductsItems[index]),
+                        decoration: InputDecoration(
+                          prefixIcon: Radio(
+                              value: viewModel.categoryProductsItems[index],
+                              groupValue: viewModel.categoryProductsItems,
+                              onChanged: (value) {
+                                viewModel.categoryProductsItems[index] =
+                                    value.toString();
+                              }),
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                            color: RODINACOLOR,
+                          )),
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                            color: RODINACOLOR,
+                          )),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * .07,
+                child: DefaultElevatedButton(
+                    widgets: [
+                      Icon(Icons.add),
+                      Text(
+                        "Add new category ",
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                    ],
+                    onPressed: () {
+                      viewModel.addCategory.text = '';
+                      setState(() {});
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                'add category',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              content: TextField(
+                                keyboardType: TextInputType.text,
+                                controller: viewModel.addCategory,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                              actions: [
+                                Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12),
+                                      child: DefaultElevatedButton(
+                                          widgets: [
+                                            Text(
+                                              textAlign: TextAlign.center,
+                                              "save ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1,
+                                            ),
+                                          ],
+                                          onPressed: () {
+                                            viewModel.addCategoryInList();
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          }),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          });
+                    }),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
