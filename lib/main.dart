@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sales/provider/my_provider.dart';
 import 'package:sales/screens/customer/customer_View.dart';
 import 'package:sales/screens/products/product_Items/product_Item_View.dart';
 import 'package:sales/screens/products/products_View.dart';
@@ -21,7 +23,11 @@ import 'layout/home_layout/home_layout/home_layout.dart';
   ):Container();
 
 
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => MyProvider(),
+        child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

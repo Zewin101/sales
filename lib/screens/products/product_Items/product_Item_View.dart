@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:sales/base.dart';
 
 import 'package:sales/screens/products/product_Items/product_Item_ViewModel.dart';
@@ -34,7 +35,9 @@ class _product_Item_ViewState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  ChangeNotifierProvider(
+        create: (context) => viewModel,
+    child:Scaffold(
       appBar: AppBar(
         title: Text('New Product'),
         leading: IconButton(
@@ -378,6 +381,7 @@ class _product_Item_ViewState
           ),
         ),
       ),
+    ),
     );
   }
 
@@ -606,7 +610,7 @@ class _product_Item_ViewState
                             Navigator.pop(context);
                           });
                         },
-                        readOnly:true ,
+                        readOnly: true,
                         controller: TextEditingController(
                             text: viewModel.categoryProductsItems[index]),
                         decoration: InputDecoration(

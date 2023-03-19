@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:provider/provider.dart';
 import 'package:sales/base.dart';
 import 'package:sales/json/jsonP.dart';
 import 'package:sales/shared/componant/componants.dart';
@@ -37,224 +38,227 @@ class _Sales_ViewState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: Text(
-          "Rodina kids",
-          style: Theme.of(context).textTheme.headline1,
+    return ChangeNotifierProvider(
+      create: (context) => viewModel,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.add),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                DefaultElevatedButton(
-                    widgets: const [
-                      Icon(Icons.arrow_back_ios),
-                    ],
-                    onPressed: () {
-                      numberMinasInvoice();
-                      setState(() {});
-                    }),
-                const SizedBox(
-                  width: 5,
-                ),
-                DefaultElevatedButton(widgets: [
-                  Text('Invoice No $InvoiceNo'),
-                ], onPressed: () {}),
-                const SizedBox(
-                  width: 5,
-                ),
-                DefaultElevatedButton(
-                    widgets: [
-                      Icon(Icons.arrow_forward_ios),
-                    ],
-                    onPressed: () {
-                      numberPlusInvoice();
-                      setState(() {});
-                    }),
-              ],
-            ),
-            Divider(
-              thickness: 2,
-            ),
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Form(
-                key: formKey,
-                child: Column(children: [
-                  TextFormField(
-                    onTap: (){
-                      productController.selection = TextSelection(
-                          baseOffset: 0,
-                          extentOffset: productController.text.length);
-                    },
-                    validator: (value) {
-                      if (value!.trim().isEmpty || value.trim() == '') {
-                        return "Enter Product";
-                      }
-                    },
-                    controller: productController,
-                    decoration: InputDecoration(labelText: 'Product'),
+        appBar: AppBar(
+          title: Text(
+            "Rodina kids",
+            style: Theme.of(context).textTheme.headline1,
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DefaultElevatedButton(
+                      widgets: const [
+                        Icon(Icons.arrow_back_ios),
+                      ],
+                      onPressed: () {
+                        numberMinasInvoice();
+                        setState(() {});
+                      }),
+                  const SizedBox(
+                    width: 5,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          onTap: () {
-                            quantityController.selection = TextSelection(
-                                baseOffset: 0,
-                                extentOffset: quantityController.text.length);
-
-                            // quantityController.clear();
-                          },
-                          validator: (value) {
-                            if (value!.trim().isEmpty || value.trim() == '') {
-                              return "Enter Quantity";
-                            }
-                          },
-                          controller: quantityController,
-                          decoration: InputDecoration(labelText: 'Quantity'),
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: TextFormField(
-                          textInputAction: TextInputAction.next,
-                          onTap: () async {
-                            await scanQRCode();
-                            setState(() {});
-                          },
-                          validator: (value) {
-                            if (value!.trim().isEmpty || value.trim() == '') {
-                              return "Enter code";
-                            }
-                            return null;
-                          },
-                          controller: codeController,
-                          decoration: const InputDecoration(
-                            labelText: 'code',
-                            suffixIcon: Icon(Icons.qr_code_2),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                    ],
+                  DefaultElevatedButton(widgets: [
+                    Text('Invoice No $InvoiceNo'),
+                  ], onPressed: () {}),
+                  const SizedBox(
+                    width: 5,
                   ),
-                  TextFormField(
-                    onTap: (){
-                     priceController.selection = TextSelection(
-                          baseOffset: 0,
-                          extentOffset: priceController.text.length);
-                    },
-                    validator: (value) {
-                      if (value!.trim().isEmpty || value.trim() == '') {
-                        return "Enter Price";
-                      }
-                    },
-                    controller: priceController,
-                    decoration: InputDecoration(labelText: 'Price'),
-                    keyboardType: TextInputType.number,
-                  ),
-                  SizedBox(height: 10.0),
-                ]),
+                  DefaultElevatedButton(
+                      widgets: [
+                        Icon(Icons.arrow_forward_ios),
+                      ],
+                      onPressed: () {
+                        numberPlusInvoice();
+                        setState(() {});
+                      }),
+                ],
               ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * .07,
-              child: DefaultElevatedButton(
-                  widgets: [
-                    Text(
-                      "Add Invoice ",
-                      style: Theme.of(context).textTheme.headline1,
+              Divider(
+                thickness: 2,
+              ),
+              Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(children: [
+                    TextFormField(
+                      onTap: () {
+                        productController.selection = TextSelection(
+                            baseOffset: 0,
+                            extentOffset: productController.text.length);
+                      },
+                      validator: (value) {
+                        if (value!.trim().isEmpty || value.trim() == '') {
+                          return "Enter Product";
+                        }
+                      },
+                      controller: productController,
+                      decoration: InputDecoration(labelText: 'Product'),
                     ),
-                    const Icon(Icons.keyboard_double_arrow_down),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            onTap: () {
+                              quantityController.selection = TextSelection(
+                                  baseOffset: 0,
+                                  extentOffset: quantityController.text.length);
+
+                              // quantityController.clear();
+                            },
+                            validator: (value) {
+                              if (value!.trim().isEmpty || value.trim() == '') {
+                                return "Enter Quantity";
+                              }
+                            },
+                            controller: quantityController,
+                            decoration: InputDecoration(labelText: 'Quantity'),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            textInputAction: TextInputAction.next,
+                            onTap: () async {
+                              await scanQRCode();
+                              setState(() {});
+                            },
+                            validator: (value) {
+                              if (value!.trim().isEmpty || value.trim() == '') {
+                                return "Enter code";
+                              }
+                              return null;
+                            },
+                            controller: codeController,
+                            decoration: const InputDecoration(
+                              labelText: 'code',
+                              suffixIcon: Icon(Icons.qr_code_2),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextFormField(
+                      onTap: () {
+                        priceController.selection = TextSelection(
+                            baseOffset: 0,
+                            extentOffset: priceController.text.length);
+                      },
+                      validator: (value) {
+                        if (value!.trim().isEmpty || value.trim() == '') {
+                          return "Enter Price";
+                        }
+                      },
+                      controller: priceController,
+                      decoration: InputDecoration(labelText: 'Price'),
+                      keyboardType: TextInputType.number,
+                    ),
+                    SizedBox(height: 10.0),
+                  ]),
+                ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * .07,
+                child: DefaultElevatedButton(
+                    widgets: [
+                      Text(
+                        "Add Invoice ",
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      const Icon(Icons.keyboard_double_arrow_down),
+                    ],
+                    onPressed: () {
+                      validInvoice();
+                    }),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columnSpacing: 20,
+                  dividerThickness: 2,
+                  sortColumnIndex: 1,
+                  sortAscending: true,
+                  columns: const [
+                    DataColumn(
+                      label: Text(
+                        'No.',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Product',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Quantity',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Price ',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'code',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Total',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.red),
+                      ),
+                    ),
                   ],
-                  onPressed: () {
-                    validInvoice();
-                  }),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columnSpacing: 20,
-                dividerThickness: 2,
-                sortColumnIndex: 1,
-                sortAscending: true,
-                columns: const [
-                  DataColumn(
-                    label: Text(
-                      'No.',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
+                  rows: viewModel.addInvoiceInRowInTheTable(),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Total: ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2!
+                        .copyWith(fontSize: 25),
                   ),
-                  DataColumn(
-                    label: Text(
-                      'Product',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Quantity',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Price ',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'code',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Total',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic, color: Colors.red),
+                  Text(
+                    /// Multiply all values of price and quantity to get the total
+                    ' ${viewModel.listInvoiceItem.fold(0.0, (sum, invoice) => (sum + invoice.quantity * invoice.price).toDouble())} ',
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 25,
                     ),
                   ),
                 ],
-                rows: viewModel.addInvoiceInRowInTheTable(),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Total: ',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(fontSize: 25),
-                ),
-                Text(
-                  /// Multiply all values of price and quantity to get the total
-                  ' ${viewModel.listInvoiceItem.fold(0.0, (sum, invoice) => (sum + invoice.quantity * invoice.price).toDouble())} ',
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 25,
-                  ),
-                ),
-              ],
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
     );

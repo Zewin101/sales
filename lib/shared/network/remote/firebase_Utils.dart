@@ -2,6 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../screens/products/models_products/prodacts_model.dart';
 
 class FirebaseUtils {
+
+
+
+
+
+
+
   CollectionReference<Products_Model> getProductsCollection() {
     return FirebaseFirestore.instance
         .collection(Products_Model.COLLECTION_NAME)

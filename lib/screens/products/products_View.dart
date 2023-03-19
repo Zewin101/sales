@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:provider/provider.dart';
 import 'package:sales/base.dart';
 import 'package:sales/screens/products/product_Items/product_Item_View.dart';
 import 'package:sales/screens/products/productrs_ViewModel.dart';
@@ -30,7 +31,9 @@ class _Products_ViewState extends BaseView<Products_View,Products_ViewModel> imp
   var searchProductsController=TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ChangeNotifierProvider(
+      create: (context) => viewModel,
+      child: Scaffold(
       appBar: AppBar(
         title: Text('Porducts',style: Theme.of(context).textTheme.headline1,),
         actions: [
@@ -97,6 +100,7 @@ class _Products_ViewState extends BaseView<Products_View,Products_ViewModel> imp
           ],
         ),
       ),
+    ),
     );
   }
 
