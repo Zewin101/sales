@@ -15,7 +15,7 @@ static const String routeName='splashScreen';
 
     });
     return Scaffold(
-      body: Image.asset(Assets.imageSplash,width: double.infinity,height: double.infinity,),
+
     );
   }
 }

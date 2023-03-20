@@ -10,6 +10,7 @@ import 'package:sales/base.dart';
 
 import 'package:sales/screens/products/product_Items/product_Item_ViewModel.dart';
 import 'package:sales/styles/colors.dart';
+import '../../../generated/assets.dart';
 import '../../../shared/componant/componants.dart';
 
 class product_Item_View extends StatefulWidget {
@@ -37,350 +38,356 @@ class _product_Item_ViewState
   Widget build(BuildContext context) {
     return  ChangeNotifierProvider(
         create: (context) => viewModel,
-    child:Scaffold(
-      appBar: AppBar(
-        title: Text('New Product'),
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.close_sharp)),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: InkWell(
-                  onTap: () async {
-                    chooseCameraOrGallery();
-
-                    // await getFromGallery();
-                  },
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.30,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: RODINACOLOR, width: 3),
-                      borderRadius: BorderRadius.circular(10),
-                      // image:DecorationImage(
-                      //   image:  AssetImage(Assets.imageBackground),)
-                    ),
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: image != null
-                        ? Container(
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            width: MediaQuery.of(context).size.width * 0.30,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: RODINACOLOR, width: 3),
-                              borderRadius: BorderRadius.circular(10),
-                              // image:DecorationImage(
-                              //   image:  AssetImage(Assets.imageBackground),)
-                            ),
-                            child: Image.file(
-                              image!,
-                              fit: BoxFit.fill,
-                            ),
-                          )
-                        : Center(child: Icon(Icons.camera_alt)),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Container(
-                height: 45,
-                child: TextFormField(
-                  keyboardType: TextInputType.name,
-                  textInputAction: TextInputAction.next,
-                  onTap: () {
-                    viewModel.nameController.selection = TextSelection(
-                        baseOffset: 0,
-                        extentOffset: viewModel.nameController.text.length);
-                  },
-                  controller: viewModel.nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Name *',
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                      color: RODINACOLOR,
-                    )),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                      color: RODINACOLOR,
-                    )),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
+    child:Stack(
+      children: [
+        Image.asset(Assets.imageBack,fit: BoxFit.fill,width: double.infinity,height: double.infinity,),
+        Scaffold(
+          /// chang image
+          appBar: AppBar(
+            title: Text('New Product'),
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.close_sharp)),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    flex: 5,
-                    child: Container(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        onTap: () {
-                          viewModel.codeController.selection = TextSelection(
-                              baseOffset: 0,
-                              extentOffset:
-                                  viewModel.codeController.text.length);
-                        },
-                        controller: viewModel.codeController,
-                        decoration: const InputDecoration(
-                          labelText: 'code *',
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: RODINACOLOR,
-                          )),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: RODINACOLOR,
-                          )),
+                  Center(
+                    child: InkWell(
+                      onTap: () async {
+                        chooseCameraOrGallery();
+
+                        // await getFromGallery();
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.30,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: RODINACOLOR, width: 3),
+                          borderRadius: BorderRadius.circular(10),
+                          // image:DecorationImage(
+                          //   image:  AssetImage(Assets.imageBackground),)
                         ),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: image != null
+                            ? Container(
+                                height: MediaQuery.of(context).size.height * 0.15,
+                                width: MediaQuery.of(context).size.width * 0.30,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: RODINACOLOR, width: 3),
+                                  borderRadius: BorderRadius.circular(10),
+                                  // image:DecorationImage(
+                                  //   image:  AssetImage(Assets.imageBackground),)
+                                ),
+                                child: Image.file(
+                                  image!,
+                                  fit: BoxFit.fill,
+                                ),
+                              )
+                            : Center(child: Icon(Icons.camera_alt)),
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                        height: 45,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                elevation: 0),
-                            onPressed: () async {
-                              await scanQRCode();
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    height: 45,
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      onTap: () {
+                        viewModel.nameController.selection = TextSelection(
+                            baseOffset: 0,
+                            extentOffset: viewModel.nameController.text.length);
+                      },
+                      controller: viewModel.nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Name *',
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: RODINACOLOR,
+                        )),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: RODINACOLOR,
+                        )),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: Container(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            onTap: () {
+                              viewModel.codeController.selection = TextSelection(
+                                  baseOffset: 0,
+                                  extentOffset:
+                                      viewModel.codeController.text.length);
                             },
-                            child: const Icon(
-                              Icons.camera_alt,
-                              color: RODINACOLOR,
-                              size: 45,
-                            ))),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-
-              ///dropDown----------------
-              // DropdownButtonFormField(
-              //     decoration: const InputDecoration(
-              //       hintText: 'code *',
-              //       focusedBorder: OutlineInputBorder(
-              //           borderSide: BorderSide(
-              //             color: RODINACOLOR,
-              //           )),
-              //       enabledBorder: OutlineInputBorder(
-              //           borderSide: BorderSide(
-              //             color: RODINACOLOR,
-              //           )),
-              //     ),
-              //     value: dropdownValue,
-              //     items: viewModel.categoryProductsItems
-              //         .map<DropdownMenuItem<String>>((String value) {
-              //       return DropdownMenuItem<String>(
-              //         value: value,
-              //         child: Text(value),
-              //       );
-              //     }).toList(),
-              //     onChanged: (String? newValue) {
-              //       setState(() {
-              //         dropdownValue = newValue!;
-              //       });
-              //     }),
-              ///dropDown----------------
-              Container(
-                height: 45,
-                child: TextFormField(
-                  readOnly: true,
-                  keyboardType: TextInputType.none,
-                  cursorColor: Colors.redAccent,
-                  onTap: () {
-                    ShowBottomSheet();
-
-                    setState(() {});
-                  },
-                  controller: viewModel.categoryController,
-                  decoration: const InputDecoration(
-                    suffixIcon: Icon(Icons.arrow_drop_down),
-                    labelText: 'Category',
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                      color: RODINACOLOR,
-                    )),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                      color: RODINACOLOR,
-                    )),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: Text(
-                    'Price: *',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  )),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      height: 45,
-                      child: TextFormField(
-                        onChanged: (value) {
-                          if (viewModel.quantityController.text.isEmpty) {
-                            viewModel.quantityController.text = '1';
-                            int total = int.parse(value) *
-                                int.parse(viewModel.quantityController.text);
-                            viewModel.totalController.text = total.toString();
-                          } else {
-                            int total = int.parse(value) *
-                                int.parse(viewModel.quantityController.text);
-                            viewModel.totalController.text = total.toString();
-                          }
-                        },
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        onTap: () {
-                          viewModel.priceController.selection = TextSelection(
-                              baseOffset: 0,
-                              extentOffset:
-                                  viewModel.priceController.text.length);
-                        },
-                        controller: viewModel.priceController,
-                        decoration: const InputDecoration(
-                          hintText: '0.00',
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: RODINACOLOR,
-                          )),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: RODINACOLOR,
-                          )),
+                            controller: viewModel.codeController,
+                            decoration: const InputDecoration(
+                              labelText: 'code *',
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: RODINACOLOR,
+                              )),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: RODINACOLOR,
+                              )),
+                            ),
+                          ),
                         ),
+                      ),
+                      Expanded(
+                        child: Container(
+                            height: 45,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0),
+                                onPressed: () async {
+                                  await scanQRCode();
+                                },
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: RODINACOLOR,
+                                  size: 45,
+                                ))),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+
+                  ///dropDown----------------
+                  // DropdownButtonFormField(
+                  //     decoration: const InputDecoration(
+                  //       hintText: 'code *',
+                  //       focusedBorder: OutlineInputBorder(
+                  //           borderSide: BorderSide(
+                  //             color: RODINACOLOR,
+                  //           )),
+                  //       enabledBorder: OutlineInputBorder(
+                  //           borderSide: BorderSide(
+                  //             color: RODINACOLOR,
+                  //           )),
+                  //     ),
+                  //     value: dropdownValue,
+                  //     items: viewModel.categoryProductsItems
+                  //         .map<DropdownMenuItem<String>>((String value) {
+                  //       return DropdownMenuItem<String>(
+                  //         value: value,
+                  //         child: Text(value),
+                  //       );
+                  //     }).toList(),
+                  //     onChanged: (String? newValue) {
+                  //       setState(() {
+                  //         dropdownValue = newValue!;
+                  //       });
+                  //     }),
+                  ///dropDown----------------
+                  Container(
+                    height: 45,
+                    child: TextFormField(
+                      readOnly: true,
+                      keyboardType: TextInputType.none,
+                      cursorColor: Colors.redAccent,
+                      onTap: () {
+                        ShowBottomSheet();
+
+                        setState(() {});
+                      },
+                      controller: viewModel.categoryController,
+                      decoration: const InputDecoration(
+                        suffixIcon: Icon(Icons.arrow_drop_down),
+                        labelText: 'Category',
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: RODINACOLOR,
+                        )),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: RODINACOLOR,
+                        )),
                       ),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: Text(
-                    'Quantity: *',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  )),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      height: 45,
-                      child: TextFormField(
-                        onChanged: (value) {
-                          int total =
-                              int.parse(viewModel.priceController.text) *
-                                  int.parse(value);
-                          viewModel.totalController.text = total.toString();
-                        },
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        onTap: () {
-                          viewModel.priceController.selection = TextSelection(
-                              baseOffset: 0,
-                              extentOffset:
-                                  viewModel.priceController.text.length);
-                        },
-                        controller: viewModel.quantityController,
-                        decoration: const InputDecoration(
-                          hintText: '1',
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: RODINACOLOR,
-                          )),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: RODINACOLOR,
-                          )),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Text(
+                        'Price: *',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      )),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 45,
+                          child: TextFormField(
+                            onChanged: (value) {
+                              if (viewModel.quantityController.text.isEmpty) {
+                                viewModel.quantityController.text = '1';
+                                int total = int.parse(value) *
+                                    int.parse(viewModel.quantityController.text);
+                                viewModel.totalController.text = total.toString();
+                              } else {
+                                int total = int.parse(value) *
+                                    int.parse(viewModel.quantityController.text);
+                                viewModel.totalController.text = total.toString();
+                              }
+                            },
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            onTap: () {
+                              viewModel.priceController.selection = TextSelection(
+                                  baseOffset: 0,
+                                  extentOffset:
+                                      viewModel.priceController.text.length);
+                            },
+                            controller: viewModel.priceController,
+                            decoration: const InputDecoration(
+                              hintText: '0.00',
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: RODINACOLOR,
+                              )),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: RODINACOLOR,
+                              )),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: Text('Total: *',
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Text(
+                        'Quantity: *',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      )),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 45,
+                          child: TextFormField(
+                            onChanged: (value) {
+                              int total =
+                                  int.parse(viewModel.priceController.text) *
+                                      int.parse(value);
+                              viewModel.totalController.text = total.toString();
+                            },
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            onTap: () {
+                              viewModel.priceController.selection = TextSelection(
+                                  baseOffset: 0,
+                                  extentOffset:
+                                      viewModel.priceController.text.length);
+                            },
+                            controller: viewModel.quantityController,
+                            decoration: const InputDecoration(
+                              hintText: '1',
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: RODINACOLOR,
+                              )),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: RODINACOLOR,
+                              )),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Text('Total: *',
+                              style:
+                                  Theme.of(context).textTheme.subtitle1?.copyWith(
 
-                                  ///COLOR TOTAL NEED TO CHANGE
-                                  fontWeight: FontWeight.bold,
-                                  color: RODINACOLOR))),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      height: 45,
-                      child: TextFormField(
-                        keyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.next,
-                        onTap: () {
-                          viewModel.totalController.selection = TextSelection(
-                              baseOffset: 0,
-                              extentOffset:
-                                  viewModel.totalController.text.length);
-                        },
-                        controller: viewModel.totalController,
-                        decoration: const InputDecoration(
-                          hintText: '0',
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: RODINACOLOR,
-                          )),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: RODINACOLOR,
-                          )),
+                                      ///COLOR TOTAL NEED TO CHANGE
+                                      fontWeight: FontWeight.bold,
+                                      color: RODINACOLOR))),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 45,
+                          child: TextFormField(
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            onTap: () {
+                              viewModel.totalController.selection = TextSelection(
+                                  baseOffset: 0,
+                                  extentOffset:
+                                      viewModel.totalController.text.length);
+                            },
+                            controller: viewModel.totalController,
+                            decoration: const InputDecoration(
+                              hintText: '0',
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: RODINACOLOR,
+                              )),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: RODINACOLOR,
+                              )),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * .07,
+                    child: DefaultElevatedButton(widgets: [
+                      Text(
+                        "Add Product ",
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      const Icon(Icons.keyboard_double_arrow_down),
+                    ], onPressed: () {}),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 25,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * .07,
-                child: DefaultElevatedButton(widgets: [
-                  Text(
-                    "Add Product ",
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  const Icon(Icons.keyboard_double_arrow_down),
-                ], onPressed: () {}),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     ),
     );
   }

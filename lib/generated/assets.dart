@@ -3,15 +3,13 @@ class Assets {
   Assets._();
 
   static const String imageBack = 'assets/image/back.png';
-  static const String imageBackground = 'assets/image/Background.png';
   static const String imageBarcod = 'assets/image/barcod.ico';
   static const String imageCustomer = 'assets/image/customer.png';
+  static const String imageLogo = 'assets/image/logo.png';
   static const String imageProducts = 'assets/image/products.png';
   static const String imagePurchase = 'assets/image/purchase.png';
   static const String imagePurchasing = 'assets/image/purchasing.png';
   static const String imageRating = 'assets/image/rating.png';
-  static const String imageSplash = 'assets/image/splash.jpg';
-  static const String imageSplash2 = 'assets/image/splash2.svg';
   static const String imageSplash3 = 'assets/image/splash3.png';
   static const String imageStore = 'assets/image/store.png';
 

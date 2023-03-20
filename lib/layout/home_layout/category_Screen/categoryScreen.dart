@@ -54,7 +54,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
 }
 List<String> screens=[
-
   Customer_View.routeName,
   Sales_Screen_View.routeName,
   Reports_View.routeName,
