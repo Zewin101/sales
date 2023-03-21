@@ -35,10 +35,11 @@ import 'layout/home_layout/home_layout/home_layout.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var provider=Provider.of<MyProvider>(context);
     return MaterialApp(
       debugShowMaterialGrid: false,
 
-      initialRoute: Login_View.routeName,
+      initialRoute:provider.firebaseUser!=null? HomeLayout.routeName:Login_View.routeName,
       routes: {
         HomeLayout.routeName: (context) => HomeLayout(),
         Login_View.routeName: (context) => Login_View(),
