@@ -13,7 +13,7 @@ import 'package:sales/screens/login/loginScreen/login_ViewModel.dart';
 import 'package:sales/shared/network/remote/firebase_Utils.dart';
 import 'package:sales/styles/colors.dart';
 
-import '../../../layout/home_layout/home_layout/home_layout.dart';
+import '../../../layout/home_layout/home_layout.dart';
 import '../../../shared/componant/componants.dart';
 import '../model/my_user.dart';
 
@@ -56,25 +56,25 @@ class _Login_ViewState extends BaseView<Login_View, Login_ViewModel>
               style: Theme.of(context).textTheme.headline1,
             ),
             actions: [
-            IconButton(onPressed: (){
-              AwesomeDialog(
-                context: context,
-                dialogType: DialogType.error,
-                animType: AnimType.rightSlide,
-                title: 'Exit',
-                btnCancelOnPress: () {},
-                btnOkOnPress: () {
-                  FirebaseAuth.instance.signOut();
-                  if (Platform.isAndroid) {
-                    SystemNavigator.pop();
-                  } else if (Platform.isIOS) {
-                    exit(0);
-                  }
-
-                 
-                },
-              ).show();
-            }, icon:   Icon(Icons.logout))
+              IconButton(
+                  onPressed: () {
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.error,
+                      animType: AnimType.rightSlide,
+                      title: 'Exit',
+                      btnCancelOnPress: () {},
+                      btnOkOnPress: () {
+                        FirebaseAuth.instance.signOut();
+                        if (Platform.isAndroid) {
+                          SystemNavigator.pop();
+                        } else if (Platform.isIOS) {
+                          exit(0);
+                        }
+                      },
+                    ).show();
+                  },
+                  icon: Icon(Icons.logout))
             ],
           ),
           body: Padding(
@@ -97,11 +97,11 @@ class _Login_ViewState extends BaseView<Login_View, Login_ViewModel>
                       ),
                       TextFormField(
                         readOnly: true,
+                        style: Theme.of(context).textTheme.subtitle2,
                         keyboardType: TextInputType.none,
                         cursorColor: Colors.redAccent,
                         onTap: () async {
                           await ShowBottomSheet();
-
                           setState(() {});
                         },
                         controller: viewModel.nameController,
@@ -219,6 +219,7 @@ class _Login_ViewState extends BaseView<Login_View, Login_ViewModel>
 
   Future ShowBottomSheet() async {
     return await showModalBottomSheet(
+      backgroundColor: Colors.orange[100],
       context: context,
       builder: (context) {
         return Container(
@@ -226,6 +227,14 @@ class _Login_ViewState extends BaseView<Login_View, Login_ViewModel>
           margin: EdgeInsets.all(15),
           child: Column(
             children: [
+              Text(
+                "Users",
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              Divider(
+                color: RODINACOLOR,
+                thickness: 2,
+              ),
               Expanded(
                 child: FutureBuilder<QuerySnapshot<RodinaKidsUser>>(
                   future: FirebaseUtils.readAllUserFromFirestore(),
@@ -233,8 +242,8 @@ class _Login_ViewState extends BaseView<Login_View, Login_ViewModel>
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     }
-                    if(snapshot.hasError){
-                      return Text( 'Error ${snapshot.error}' );
+                    if (snapshot.hasError) {
+                      return Text('Error ${snapshot.error}');
                     }
                     var allUser =
                         snapshot.data?.docs.map((e) => e.data()).toList();
@@ -242,14 +251,15 @@ class _Login_ViewState extends BaseView<Login_View, Login_ViewModel>
                     return ListView.builder(
                       itemCount: allUser?.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          color: index.isOdd ? RODINACOLOR2 : RODINACOLOR3,
-                          margin: EdgeInsets.symmetric(vertical: 6),
-                          height: 45,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.none,
-                            onTap: () {
+                        return DefaultElevatedButton(
+                            widgets: [
+                              Icon(Icons.arrow_back_ios, color: RODINACOLOR3),
+                              Text(
+                                allUser![index].name,
+                                style: Theme.of(context).textTheme.headline1,
+                              ),
+                            ],
+                            onPressed: () {
                               viewModel.emailController.text =
                                   allUser[index].email;
                               viewModel.nameController.text =
@@ -257,28 +267,7 @@ class _Login_ViewState extends BaseView<Login_View, Login_ViewModel>
                               setState(() {
                                 Navigator.pop(context);
                               });
-                            },
-                            readOnly: true,
-                            controller: TextEditingController(
-                                text: allUser![index].name),
-                            decoration: InputDecoration(
-                              prefixIcon: Radio(
-                                  value: allUser![index].name,
-                                  groupValue: allUser,
-                                  onChanged: (value) {
-                                    allUser![index].name = value.toString();
-                                  }),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: RODINACOLOR,
-                              )),
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: RODINACOLOR,
-                              )),
-                            ),
-                          ),
-                        );
+                            });
                       },
                     );
                   },
@@ -294,3 +283,35 @@ class _Login_ViewState extends BaseView<Login_View, Login_ViewModel>
     );
   }
 }
+// TextFormField(
+// textAlign: TextAlign.center,
+// keyboardType: TextInputType.none,
+// onTap: () {
+// viewModel.emailController.text =
+// allUser[index].email;
+// viewModel.nameController.text =
+// allUser[index].name;
+// setState(() {
+// Navigator.pop(context);
+// });
+// },
+// readOnly: true,
+// style: Theme.of(context).textTheme.headline1,
+// controller: TextEditingController(
+// text: allUser![index].name),
+// decoration: const InputDecoration(
+// border:OutlineInputBorder(
+//
+// ) ,
+// prefixIcon: Icon(Icons.arrow_back_ios,color: CATCOLOR7),
+// focusedBorder: OutlineInputBorder(
+// borderSide: BorderSide(
+// color: RODINACOLOR,
+// ),
+// ),
+// enabledBorder: OutlineInputBorder(
+// borderSide: BorderSide(
+// color: RODINACOLOR,
+// )),
+// ),
+// ),

@@ -38,6 +38,8 @@ class MyThemeData {
             fontSize: 30, fontWeight: FontWeight.bold, color: RODINACOLOR),
         subtitle2: TextStyle(
             fontSize: 20, fontWeight: FontWeight.bold, color: RODINACOLOR),
+        headline3: TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: RODINACOLOR),
       ),
       floatingActionButtonTheme:
           const FloatingActionButtonThemeData(backgroundColor: RODINACOLOR),

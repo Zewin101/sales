@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sales/screens/login/loginScreen/login_view.dart';
-import '../../layout_model/category.dart';
-import '../../../screens/customer/customer_View.dart';
-import '../../../screens/products/products_View.dart';
-import '../../../screens/reports/reports_View.dart';
-import '../../../screens/sales/createFatoura/create_fatoura_view.dart';
+import '../layout_model/category.dart';
+import '../../screens/customer/customer_View.dart';
+import '../../screens/products/products_View.dart';
+import '../../screens/reports/reports_View.dart';
+import '../../screens/sales/createFatoura/create_fatoura_view.dart';
 import 'categoryItem.dart';
 
 

@@ -3,11 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sales/generated/assets.dart';
-import 'package:sales/layout/home_layout/home_layout/drawer.dart';
 import 'package:sales/provider/my_provider.dart';
 import 'package:sales/screens/login/loginScreen/login_view.dart';
-import 'package:sales/shared/network/remote/firebase_Utils.dart';
-import '../category_Screen/categoryScreen.dart';
+import 'categoryScreen.dart';
+import 'drawer.dart';
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = "HomeLayout";

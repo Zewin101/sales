@@ -7,6 +7,7 @@ class FirebaseError{
   static const String existsEmail='The account already exists for that email.';
   static const String wrongEmailOrPassword='WRONG EMAIL OR PASSWORD';
   static const String loginSuccessfully='Login Successfully';
+  static const String productAdd='productAdd';
 
 }
 

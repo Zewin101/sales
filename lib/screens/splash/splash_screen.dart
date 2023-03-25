@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sales/generated/assets.dart';
-import 'package:sales/layout/home_layout/home_layout/home_layout.dart';
+import 'package:sales/layout/home_layout/home_layout.dart';
 
 class Splash_Screen extends StatelessWidget {
   const Splash_Screen({Key? key}) : super(key: key);

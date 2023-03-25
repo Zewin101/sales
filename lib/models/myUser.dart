@@ -25,7 +25,6 @@ class RodinaKidsUser {
       'id': id,
       'name': name,
       'phone': phone,
-
       'email': email,
     };
   }

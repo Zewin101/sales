@@ -10,7 +10,7 @@ const Color CATCOLOR6 = Color.fromRGBO(10, 22, 84, 1.0);
 const Color CATCOLOR7 = Color.fromRGBO(231, 227, 171, 1.0);
 
 const Color RODINACOLOR2 = Color.fromRGBO(129, 122, 173, 1.0);
-const Color RODINACOLOR3 = Color.fromRGBO(213, 210, 232, 1.0);
+const Color RODINACOLOR3 = Color.fromRGBO(255, 255, 255, 1.0);
 const Color RODINACOLORPINK = Color.fromRGBO(255, 187, 59, 1.0);
 const Color primaryColor = Color.fromRGBO(93, 156, 236, 1.0);
 const Color darkPrimary = Color.fromRGBO(6, 14, 30, 1.0);

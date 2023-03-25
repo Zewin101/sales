@@ -4,9 +4,9 @@ class Products_Model {
   String productName;
   String code;
   String category;
-  int sellingPrice;
-  int priceBuy;
-  int quantity;
+  String sellingPrice;
+  String priceBuy;
+  String quantity;
   String productImage;
 
   Products_Model(
