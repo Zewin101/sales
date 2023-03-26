@@ -39,7 +39,7 @@ class _DrawerState extends State<DrawerScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 7),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white38,
+
                   borderRadius: BorderRadius.circular(10)),
               child: Column(
                 children: [

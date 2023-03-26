@@ -30,7 +30,6 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
     super.initState();
     viewModel.navigator = this;
     setState(() {
-
     });
   }
 
