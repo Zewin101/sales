@@ -12,7 +12,7 @@ class CategoryData {
 
   static List<CategoryData> getCategoryData() {
     return [
-      CategoryData( 'العملاء', Assets.imageProducts, CATCOLOR1),
+      CategoryData( 'العملاء', Assets.imageCustomer, CATCOLOR1),
       CategoryData( 'المبيعات', Assets.imagePurchase, CATCOLOR2),
       CategoryData( 'التقارير', Assets.imageRating, CATCOLOR3),
       CategoryData( 'المخزون', Assets.imageStore, CATCOLOR4),
@@ -20,7 +20,7 @@ class CategoryData {
       CategoryData( 'الاصناف', Assets.imageProducts,CATCOLOR6),
       CategoryData( ' الموردين', Assets.imageProducts,CATCOLOR7),
       CategoryData( ' الخزنة', Assets.imageTreasury,CATCOLOR8),
-      CategoryData( ' الاعدادات', Assets.imageProducts,CATCOLOR9),
+      CategoryData( ' الاعدادات', Assets.imageSetting,CATCOLOR9),
     ];
   }
 }

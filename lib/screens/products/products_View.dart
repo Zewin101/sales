@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:sales/base.dart';
 import 'package:sales/screens/products/add_product_Items/add_product_Item_View.dart';
 import 'package:sales/screens/products/card_items/card_items.dart';
 import 'package:sales/screens/products/productrs_ViewModel.dart';
+import 'package:sales/shared/componant/componants.dart';
 import 'package:sales/shared/network/remote/firebase_Utils.dart';
 import 'package:sales/styles/colors.dart';
 
@@ -29,8 +31,7 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
     // TODO: implement initState
     super.initState();
     viewModel.navigator = this;
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -80,6 +81,7 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
                           height: 45,
                           child: TextFormField(
                             onTap: () {
+                              /// select all
                               searchProductsController.selection =
                                   TextSelection(
                                       baseOffset: 0,
@@ -120,10 +122,9 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.red,
                     thickness: 3,
-
                   ),
                   Expanded(
                     child: FutureBuilder<QuerySnapshot<Products_Model>>(
@@ -142,7 +143,16 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
                         return ListView.builder(
                           itemCount: allProducts?.length,
                           itemBuilder: (context, index) {
-                            return Card_Items(
+                            return InkWell(
+                              onTap: () {
+                                Product_details(
+                                    productName: allProducts![index].productName,
+                                    productImage: allProducts![index].productImage,
+                                    code: allProducts![index].code,
+                                    category: allProducts![index].category,
+                                    quantity: allProducts![index].quantity);
+                              },
+                              child: Card_Items(
                                 productName: allProducts![index].productName,
                                 code: allProducts[index].code,
                                 priceBuy: allProducts[index].priceBuy,
@@ -150,7 +160,8 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
                                 quantity: allProducts[index].quantity,
                                 image: allProducts[index].productImage,
                                 category: allProducts[index].category,
-                            index:index ,
+                                index: index,
+                              ),
                             );
                           },
                         );
@@ -196,5 +207,67 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
         setState(() {});
       } on PlatformException {}
     }
+  }
+
+  Future Product_details(
+      {required String productName,
+      required String productImage,
+      required String code,
+      required String category,
+      required String quantity}) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            productName,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle2,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                margin: EdgeInsets.all(1),
+                width: MediaQuery.of(context).size.width * .9,
+                height: MediaQuery.of(context).size.width * .95,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(
+                          productImage,
+                        ),
+                        fit: BoxFit.fill),
+                    borderRadius: BorderRadius.circular(8),
+                    color: RODINACOLOR),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+                'Code :$code',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+                'category:  $category',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+              '  quantity : $quantity',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

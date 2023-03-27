@@ -65,9 +65,11 @@ class FirebaseUtils {
 
 
   ///get all Products
-  static Future<QuerySnapshot<Products_Model>> readAllProductsFromFirestore() async {
+  static Future<QuerySnapshot<Products_Model>> readAllProductsFromFirestore({String? search}) async {
     QuerySnapshot<Products_Model> allProducts =
-        await getProductCollection().get();
+        await getProductCollection().get(
+          GetOptions(source: Source.cache)
+        );
     return allProducts;
   }
 

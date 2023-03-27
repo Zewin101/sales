@@ -23,7 +23,6 @@ dependencies:
   cloud_firestore: ^4.4.3
   awesome_dialog: ^3.0.2
   intl: ^0.17.0
-  flutter_speed_dial: ^6.2.0
   pdf: ^3.9.0
   syncfusion_flutter_barcodes: ^20.4.54
   qrscan: ^0.3.3
@@ -32,6 +31,8 @@ dependencies:
   image_picker: ^0.8.7
   file_picker: ^5.2.6
   firebase_storage: ^11.0.16
+  syncfusion_flutter_charts: ^20.4.54
+
 
 
 
