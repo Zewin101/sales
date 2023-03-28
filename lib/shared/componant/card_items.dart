@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sales/generated/assets.dart';
 
-import '../../../styles/colors.dart';
+import '../../styles/colors.dart';
 
 class Card_Items extends StatelessWidget {
   String productName;

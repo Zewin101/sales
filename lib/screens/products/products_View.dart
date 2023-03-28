@@ -8,13 +8,14 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:sales/base.dart';
 import 'package:sales/screens/products/add_product_Items/add_product_Item_View.dart';
-import 'package:sales/screens/products/card_items/card_items.dart';
+import 'package:sales/shared/componant/card_items.dart';
 import 'package:sales/screens/products/productrs_ViewModel.dart';
 import 'package:sales/shared/componant/componants.dart';
 import 'package:sales/shared/network/remote/firebase_Utils.dart';
 import 'package:sales/styles/colors.dart';
 
 import '../../generated/assets.dart';
+import '../../shared/componant/Product_Details.dart';
 import 'models_products/prodacts_model.dart';
 
 class Products_View extends StatefulWidget {
@@ -145,7 +146,8 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                Product_details(
+                                Product_Details(
+                                  context:context,
                                     productName: allProducts![index].productName,
                                     productImage: allProducts![index].productImage,
                                     code: allProducts![index].code,
@@ -209,65 +211,4 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
     }
   }
 
-  Future Product_details(
-      {required String productName,
-      required String productImage,
-      required String code,
-      required String category,
-      required String quantity}) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-            productName,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.subtitle2,
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                margin: EdgeInsets.all(1),
-                width: MediaQuery.of(context).size.width * .9,
-                height: MediaQuery.of(context).size.width * .95,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(
-                          productImage,
-                        ),
-                        fit: BoxFit.fill),
-                    borderRadius: BorderRadius.circular(8),
-                    color: RODINACOLOR),
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              Text(
-                'Code :$code',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2,
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              Text(
-                'category:  $category',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2,
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              Text(
-              '  quantity : $quantity',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 }
