@@ -63,6 +63,12 @@ class FirebaseUtils {
     return Myproduct;
   }
 
+  /// delete product
+
+  static Future<void> deleteProductFromFirestore(String id){
+   return getProductCollection().doc(id).delete();
+  }
+
 
   ///get all Products
   static Future<QuerySnapshot<Products_Model>> readAllProductsFromFirestore({String? search}) async {

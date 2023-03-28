@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../styles/colors.dart';
 
@@ -13,7 +14,10 @@ class Items_Products extends StatelessWidget {
   int index;
   Function addProduct;
   Function subProduct;
+  Function deleteProduct;
+  Function editeProduct;
   int counte;
+
 
   Items_Products({
     required this.productName,
@@ -27,92 +31,116 @@ class Items_Products extends StatelessWidget {
     required this.addProduct,
     required this.subProduct,
     required this.counte,
+    required this.deleteProduct,
+    required this.editeProduct
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Card(
-
-          color: Colors.white70,
-          elevation: 20,
-          shadowColor: RODINACOLOR,
-          child: Row(
-            children: [
-              Container(
-                margin: EdgeInsets.all(5),
-                width: MediaQuery.of(context).size.width * .15,
-                height: MediaQuery.of(context).size.width * .15,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(image), fit: BoxFit.fill),
-                    borderRadius: BorderRadius.circular(8),
-                    color: RODINACOLOR),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * .50,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(productName,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.subtitle2),
-                    Text(priceSelling,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            ?.copyWith(color: Colors.blue)),
-                    // Text(
-                    //   priceBuy,
-                    //   style: Theme.of(context).textTheme.subtitle2,
-                    // ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                   subProduct();
-                  },
-                  child: Icon(
-                    Icons.remove_circle_outlined,
-                    size: 30,
-                    color: RODINACOLOR,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "$counte",
-                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 25,color: Colors.redAccent),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    addProduct();
-                  },
-                  child: Icon(
-                    Icons.add_circle_outlined,
-                    size: 30,
-                    color: RODINACOLOR,
-                  ),
-                ),
-
-              ),
-              SizedBox(width: 5,)
-            ],
-          ),
+    return Slidable(
+      startActionPane: ActionPane(motion: ScrollMotion(), children: [
+        SlidableAction(
+          onPressed: (context){
+            deleteProduct();
+          },
+          backgroundColor: Color(0xFFFE4A49),
+          foregroundColor: Colors.white,
+          icon: Icons.delete,
+          label: 'DELETE',
         ),
-      ],
+        SlidableAction(
+          onPressed: (context){
+            editeProduct();
+          },
+          backgroundColor: Color(0xFF21B7CA),
+          foregroundColor: Colors.white,
+          icon: Icons.edit_note_rounded,
+          label: 'EDIT',
+        ),
+      ],),
+      child: Column(
+        children: [
+          Card(
+
+            color: Colors.white70,
+            elevation: 20,
+            shadowColor: RODINACOLOR,
+            child: Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(5),
+                  width: MediaQuery.of(context).size.width * .15,
+                  height: MediaQuery.of(context).size.width * .15,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(image), fit: BoxFit.fill),
+                      borderRadius: BorderRadius.circular(8),
+                      color: RODINACOLOR),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * .50,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(productName,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.subtitle2),
+                      Text(priceSelling,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(color: Colors.blue)),
+                      // Text(
+                      //   priceBuy,
+                      //   style: Theme.of(context).textTheme.subtitle2,
+                      // ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                     subProduct();
+                    },
+                    child: Icon(
+                      Icons.remove_circle_outlined,
+                      size: 30,
+                      color: RODINACOLOR,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "$counte",
+                  style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 25,color: Colors.redAccent),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      addProduct();
+                    },
+                    child: Icon(
+                      Icons.add_circle_outlined,
+                      size: 30,
+                      color: RODINACOLOR,
+                    ),
+                  ),
+
+                ),
+                SizedBox(width: 5,)
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

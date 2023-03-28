@@ -155,6 +155,13 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
                                     quantity: allProducts![index].quantity);
                               },
                               child: Card_Items(
+                                editeProduct: ()async{
+                               await  viewModel.EditProducte(allProducts[index].id);
+
+                                },
+                                deleteProduct: ()async{
+                                 await viewModel.DeleteProducte(allProducts[index].id);
+                                },
                                 productName: allProducts![index].productName,
                                 code: allProducts[index].code,
                                 priceBuy: allProducts[index].priceBuy,
@@ -190,7 +197,6 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
       try {
         final qrCode = await FlutterBarcodeScanner.scanBarcode(
             '#ff6966', 'Cancel', true, ScanMode.QR);
-
         if (!mounted) return;
 
         setState(() {

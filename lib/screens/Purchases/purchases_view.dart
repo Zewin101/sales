@@ -106,7 +106,9 @@ class _Customer_ViewState extends BaseView<Purchases_View, Purchases_ViewModel>
                                 size: 45,
                               ))),
                     ),
-                    SizedBox(width: 7,)
+                    SizedBox(
+                      width: 7,
+                    )
                   ],
                 ),
                 const Divider(
@@ -134,16 +136,23 @@ class _Customer_ViewState extends BaseView<Purchases_View, Purchases_ViewModel>
                               print(viewModel.counter);
                             },
                             child: Items_Products(
+                              deleteProduct: ()async{
+                              await FirebaseUtils.deleteProductFromFirestore(allProducts[index].id);
+                                setState(() {
+
+                                });
+                              },
+                              editeProduct: (){
+
+                              },
                               addProduct: () {
                                 viewModel.counter++;
-
-                                print( viewModel.counter);
+                                print(viewModel.counter);
                               },
                               counte: viewModel.counter,
                               subProduct: () {
                                 viewModel.counter--;
-
-                                print( viewModel.counter);
+                                print(viewModel.counter);
                               },
                               productName: allProducts![index].productName,
                               code: allProducts[index].code,
