@@ -14,7 +14,6 @@ import 'package:sales/screens/reports/reports_View.dart';
 import 'package:sales/screens/sales/createFatoura/create_fatoura_view.dart';
 import 'package:sales/screens/sales/invoices/invoices_View.dart';
 import 'package:sales/screens/setting/addUser/addUserScreen/addUser_view.dart';
-import 'package:sales/screens/splash/splash_screen.dart';
 import 'package:sales/screens/stock/stock_screen_view.dart';
 import 'package:sales/screens/suppliers/suppliers_screen_view.dart';
 import 'package:sales/styles/myTheme.dart';
@@ -47,7 +46,6 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeLayout.routeName: (context) => HomeLayout(),
         Login_View.routeName: (context) => Login_View(),
-        Splash_Screen.routeName: (context) => Splash_Screen(),
         Sales_Screen_View.routeName: (context) => Sales_Screen_View(),
         Invoices_View.routeName: (context) => Invoices_View(),
         Customer_View.routeName: (context) => Customer_View(),

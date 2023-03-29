@@ -98,7 +98,7 @@ class _Customer_ViewState extends BaseView<Purchases_View, Purchases_ViewModel>
                                   backgroundColor: Colors.transparent,
                                   elevation: 0),
                               onPressed: () async {
-                                await scanQRCode();
+                                await viewModel.navigator?.scanQRCode1( viewModel.searchProductsController.text );
                               },
                               child: const Icon(
                                 Icons.qr_code_scanner,
@@ -136,15 +136,14 @@ class _Customer_ViewState extends BaseView<Purchases_View, Purchases_ViewModel>
                               print(viewModel.counter);
                             },
                             child: Items_Products(
-                              deleteProduct: ()async{
-                              await FirebaseUtils.deleteProductFromFirestore(allProducts[index].id);
+                              deleteProduct: () async {
+                                await FirebaseUtils.deleteProductFromFirestore(
+                                    allProducts[index].id);
                                 setState(() {
 
                                 });
                               },
-                              editeProduct: (){
-
-                              },
+                              editeProduct: () {},
                               addProduct: () {
                                 viewModel.counter++;
                                 print(viewModel.counter);
@@ -182,31 +181,7 @@ class _Customer_ViewState extends BaseView<Purchases_View, Purchases_ViewModel>
     return Purchases_ViewModel();
   }
 
-  Future scanQRCode() async {
-    if (!Platform.isWindows) {
-      try {
-        final qrCode = await FlutterBarcodeScanner.scanBarcode(
-            '#ff6966', 'Cancel', true, ScanMode.QR);
 
-        if (!mounted) return;
-
-        setState(() {
-          if (qrCode == '-1') {
-            viewModel.searchProductsController.text = '';
-            print(qrCode);
-          } else {
-            viewModel.searchProductsController.text = qrCode;
-          }
-          print(qrCode);
-          return;
-        });
-      } on PlatformException {}
-    } else {
-      try {
-        setState(() {});
-      } on PlatformException {}
-    }
-  }
 
   Future itemAdd() {
     return showDialog(

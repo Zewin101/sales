@@ -203,7 +203,7 @@ class _product_Item_ViewState
                                         backgroundColor: Colors.transparent,
                                         elevation: 0),
                                     onPressed: () async {
-                                      await scanQRCode();
+                                      await viewModel.navigator?.scanQRCode1(viewModel.codeController.text);
                                     },
                                     child: const Icon(
                                       Icons.camera_alt,
@@ -518,35 +518,38 @@ class _product_Item_ViewState
           viewModel.priceBuyController.text,
           quantity:
           viewModel.quantityController.text);
+      setState(() {
+
+      });
     }
   }
 
 
   @override
-  Future scanQRCode() async {
-    if (!Platform.isWindows) {
-      try {
-        final qrCode = await FlutterBarcodeScanner.scanBarcode(
-            '#ff6966', 'Cancel', true, ScanMode.QR);
-        if (!mounted) return;
-
-        setState(() {
-          if (qrCode == '-1') {
-            viewModel.codeController.text = '';
-            print(qrCode);
-          } else {
-            viewModel.codeController.text = qrCode;
-          }
-          print(qrCode);
-          return;
-        });
-      } on PlatformException {}
-    } else {
-      try {
-        setState(() {});
-      } on PlatformException {}
-    }
-  }
+  // Future scanQRCode() async {
+  //   if (!Platform.isWindows) {
+  //     try {
+  //       final qrCode = await FlutterBarcodeScanner.scanBarcode(
+  //           '#ff6966', 'Cancel', true, ScanMode.QR);
+  //       if (!mounted) return;
+  //
+  //       setState(() {
+  //         if (qrCode == '-1') {
+  //           viewModel.codeController.text = '';
+  //           print(qrCode);
+  //         } else {
+  //           viewModel.codeController.text = qrCode;
+  //         }
+  //         print(qrCode);
+  //         return;
+  //       });
+  //     } on PlatformException {}
+  //   } else {
+  //     try {
+  //       setState(() {});
+  //     } on PlatformException {}
+  //   }
+  // }
 
   Future getFromGallery() async {
     if (!Platform.isWindows) {
@@ -862,7 +865,7 @@ class _product_Item_ViewState
                                                 .addCategoryController.text;
                                             viewModel.addCategoryInFirestore(
                                                 categoryName: categoryName);
-                                            viewModel.addCategoryInList();
+                                            // viewModel.addCategoryInList();
                                             viewModel.addCategoryController
                                                 .clear();
                                             setState(() {});

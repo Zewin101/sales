@@ -46,4 +46,6 @@ class _Customer_ViewState extends BaseView<Reports_View, Reports_ViewModel>
   Reports_ViewModel initViewModel() {
     return Reports_ViewModel();
   }
+
+
 }

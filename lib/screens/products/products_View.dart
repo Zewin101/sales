@@ -113,7 +113,7 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
                                     backgroundColor: Colors.transparent,
                                     elevation: 0),
                                 onPressed: () async {
-                                  await scanQRCode();
+                                  await viewModel.navigator?.scanQRCode1( searchProductsController.text);
                                 },
                                 child: const Icon(
                                   Icons.qr_code_scanner,
@@ -191,30 +191,5 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
     return Products_ViewModel();
   }
 
-  @override
-  Future scanQRCode() async {
-    if (!Platform.isWindows) {
-      try {
-        final qrCode = await FlutterBarcodeScanner.scanBarcode(
-            '#ff6966', 'Cancel', true, ScanMode.QR);
-        if (!mounted) return;
-
-        setState(() {
-          if (qrCode == '-1') {
-            searchProductsController.text = '';
-            print(qrCode);
-          } else {
-            searchProductsController.text = qrCode;
-          }
-          print(qrCode);
-          return;
-        });
-      } on PlatformException {}
-    } else {
-      try {
-        setState(() {});
-      } on PlatformException {}
-    }
-  }
 
 }

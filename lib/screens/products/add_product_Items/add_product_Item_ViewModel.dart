@@ -2,12 +2,9 @@ import 'dart:io';
 import 'dart:math';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sales/base.dart';
 import 'package:sales/shared/network/remote/firebase_Utils.dart';
-
-import '../../../shared/constants/constants.dart';
 import '../models_products/category_products.dart';
 import '../models_products/prodacts_model.dart';
 
@@ -19,6 +16,7 @@ class Products_Item_ViewModel extends BaseViewModel<Products_Item_Naivagator> {
   /// get image Path
 
   Future getImagePath() async {
+    navigator!.showLoading(message: 'loading...');
     var imagePath = basename(image!.path);
     print('path image ---------->>>>>>>>>>${imagePath}');
 
@@ -27,14 +25,15 @@ class Products_Item_ViewModel extends BaseViewModel<Products_Item_Naivagator> {
     imagePath = 'zewin$random';
     var refStorage =
         FirebaseStorage.instance.ref('images Zewin').child('$imagePath');
+   navigator!.hideLoading();
     await refStorage.putFile(image!);
     imageUrl = await refStorage.getDownloadURL();
     print(imageUrl);
   }
 
-  List<String> categoryProductsItems = [
-    'No category',
-  ];
+  // List<String> categoryProductsItems = [
+  //   'No category',
+  // ];
   var addCategoryController = TextEditingController();
   var nameController = TextEditingController();
   var codeController = TextEditingController();
@@ -44,9 +43,9 @@ class Products_Item_ViewModel extends BaseViewModel<Products_Item_Naivagator> {
   var categoryController = TextEditingController();
   var priceBuyController = TextEditingController();
 
-  void addCategoryInList() {
-    categoryProductsItems.add(addCategoryController.text);
-  }
+  // void addCategoryInList() {
+  //   categoryProductsItems.add(addCategoryController.text);
+  // }
 
   /// add category
   addCategoryInFirestore({required String categoryName}) async {
@@ -82,6 +81,7 @@ class Products_Item_ViewModel extends BaseViewModel<Products_Item_Naivagator> {
     await FirebaseUtils.addProductInCategoryInFireStore(product);
     navigator!.showMessage('Product Added');
     navigator!.hideLoading();
+    navigator!.hideLoading();
     print(product);
     addCategoryController.clear();
     nameController.clear();
@@ -95,6 +95,5 @@ class Products_Item_ViewModel extends BaseViewModel<Products_Item_Naivagator> {
 }
 
 abstract class Products_Item_Naivagator extends BaseNavigator {
-  Future scanQRCode();
   void ShowBottomSheet();
 }
