@@ -32,6 +32,7 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
     // TODO: implement initState
     super.initState();
     viewModel.navigator = this;
+    FirebaseUtils.readAllProductsFromFirestore();
     setState(() {});
   }
 

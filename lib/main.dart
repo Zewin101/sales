@@ -22,11 +22,13 @@ import 'layout/home_layout/home_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Platform.isAndroid || Platform.isIOS
-      ? await Firebase.initializeApp(
+  // Platform.isAndroid || Platform.isIOS
+      await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform,
-        )
-      : Container();
+
+        );
+
+      // : Container();
 
   runApp(
     ChangeNotifierProvider(create: (context) => MyProvider(), child: MyApp()),
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowMaterialGrid: false,
       initialRoute:
-          Platform.isAndroid || Platform.isIOS || provider.firebaseUser != null
+        provider.firebaseUser != null
               ? HomeLayout.routeName
               : Login_View.routeName,
       routes: {

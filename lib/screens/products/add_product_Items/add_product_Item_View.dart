@@ -36,7 +36,7 @@ class _product_Item_ViewState
     // TODO: implement initState
     super.initState();
     viewModel.navigator = this;
-    // dropdownValue = viewModel.categoryProductsItems[0];
+
   }
 
   @override
@@ -507,7 +507,8 @@ class _product_Item_ViewState
 
   Future addProductValid() async {
     if (formKey.currentState!.validate()) {
-      await viewModel.getImagePath();
+      /// upload Image
+      // await viewModel.getImagePath();
       await viewModel.addProductInFirestore(
           productName: viewModel.nameController.text,
           code: viewModel.codeController.text,
@@ -519,7 +520,6 @@ class _product_Item_ViewState
           quantity:
           viewModel.quantityController.text);
       setState(() {
-
       });
     }
   }

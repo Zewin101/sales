@@ -11,10 +11,9 @@ import '../models_products/prodacts_model.dart';
 class Products_Item_ViewModel extends BaseViewModel<Products_Item_Naivagator> {
   // List<Products_Model> products = [];
   File? image;
-  var imageUrl;
+  var imageUrl='https://www.facebook.com/photo/?fbid=598273022343246&set=a.564130925757456';
 
   /// get image Path
-
   Future getImagePath() async {
     navigator!.showLoading(message: 'loading...');
     var imagePath = basename(image!.path);
@@ -31,9 +30,6 @@ class Products_Item_ViewModel extends BaseViewModel<Products_Item_Naivagator> {
     print(imageUrl);
   }
 
-  // List<String> categoryProductsItems = [
-  //   'No category',
-  // ];
   var addCategoryController = TextEditingController();
   var nameController = TextEditingController();
   var codeController = TextEditingController();
@@ -43,9 +39,7 @@ class Products_Item_ViewModel extends BaseViewModel<Products_Item_Naivagator> {
   var categoryController = TextEditingController();
   var priceBuyController = TextEditingController();
 
-  // void addCategoryInList() {
-  //   categoryProductsItems.add(addCategoryController.text);
-  // }
+
 
   /// add category
   addCategoryInFirestore({required String categoryName}) async {
