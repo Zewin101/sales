@@ -12,6 +12,7 @@ class Assets {
   static const String imagePurchases = 'assets/image/Purchases.ico';
   static const String imagePurchasing = 'assets/image/purchasing.png';
   static const String imageRating = 'assets/image/rating.png';
+  static const String imageRodinalogo = 'assets/image/rodinalogo.png';
   static const String imageSetting = 'assets/image/Setting.ico';
   static const String imageSplash3 = 'assets/image/splash3.png';
   static const String imageStore = 'assets/image/store.png';

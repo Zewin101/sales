@@ -27,9 +27,7 @@ class Card_Items extends StatelessWidget {
       required this.category,
       required this.index,
       required this.deleteProduct,
-      required this.editeProduct
-
-      });
+      required this.editeProduct});
 
   @override
   Widget build(BuildContext context) {
@@ -40,26 +38,29 @@ class Card_Items extends StatelessWidget {
         ),
         Container(color: Colors.grey, height: 2, width: double.infinity),
         Slidable(
-          startActionPane: ActionPane(motion: ScrollMotion(), children: [
-            SlidableAction(
-              onPressed: (context){
-               deleteProduct();
-              },
-              backgroundColor: Color(0xFFFE4A49),
-              foregroundColor: Colors.white,
-              icon: Icons.delete,
-              label: 'DELETE',
-            ),
-            SlidableAction(
-              onPressed: (context){
-                editeProduct();
-              },
-              backgroundColor: Color(0xFF21B7CA),
-              foregroundColor: Colors.white,
-              icon: Icons.edit_note_rounded,
-              label: 'EDIT',
-            ),
-          ],),
+          startActionPane: ActionPane(
+            motion: ScrollMotion(),
+            children: [
+              SlidableAction(
+                onPressed: (context) {
+                  deleteProduct();
+                },
+                backgroundColor: Color(0xFFFE4A49),
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'DELETE',
+              ),
+              SlidableAction(
+                onPressed: (context) {
+                  editeProduct();
+                },
+                backgroundColor: Color(0xFF21B7CA),
+                foregroundColor: Colors.white,
+                icon: Icons.edit_note_rounded,
+                label: 'EDIT',
+              ),
+            ],
+          ),
           child: Row(
             children: [
               Container(
@@ -67,10 +68,14 @@ class Card_Items extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * .2,
                 height: MediaQuery.of(context).size.width * .2,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(image), fit: BoxFit.fill),
-                    borderRadius: BorderRadius.circular(8),
-                    color: RODINACOLOR),
+                  borderRadius: BorderRadius.circular(8),
+                  color: RODINACOLOR,
+                  image: DecorationImage(
+                    ///image to storge
+                    //image: NetworkImage(image), fit: BoxFit.fill),
+                    image: AssetImage(Assets.imageRodinalogo,),fit: BoxFit.fill,
+                  ),
+                ),
               ),
               SizedBox(
                 width: 5,
@@ -101,7 +106,10 @@ class Card_Items extends StatelessWidget {
               Expanded(
                   child: Text(
                 quantity,
-                style: Theme.of(context).textTheme.subtitle2?.copyWith(color: Colors.deepPurpleAccent,fontSize: 30),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    ?.copyWith(color: Colors.deepPurpleAccent, fontSize: 30),
                 textAlign: TextAlign.center,
               ))
             ],

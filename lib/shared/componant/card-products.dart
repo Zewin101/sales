@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../../generated/assets.dart';
 import '../../styles/colors.dart';
 
 class Items_Products extends StatelessWidget {
@@ -72,10 +73,13 @@ class Items_Products extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * .15,
                   height: MediaQuery.of(context).size.width * .15,
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(image), fit: BoxFit.fill),
-                      borderRadius: BorderRadius.circular(8),
-                      color: RODINACOLOR),
+                    borderRadius: BorderRadius.circular(8),
+                    color: RODINACOLOR,
+                      image: const DecorationImage(
+                          // image: NetworkImage(image), fit: BoxFit.fill),
+                          image: AssetImage(Assets.imageRodinalogo,),fit: BoxFit.fill,
+                      ),
+                ),
                 ),
                 SizedBox(
                   width: 5,

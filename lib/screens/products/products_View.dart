@@ -32,8 +32,6 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
     // TODO: implement initState
     super.initState();
     viewModel.navigator = this;
-    FirebaseUtils.readAllProductsFromFirestore();
-    setState(() {});
   }
 
   @override
@@ -149,16 +147,15 @@ class _Products_ViewState extends BaseView<Products_View, Products_ViewModel>
                               onTap: () {
                                 Product_Details(
                                   context:context,
-                                    productName: allProducts![index].productName,
-                                    productImage: allProducts![index].productImage,
-                                    code: allProducts![index].code,
-                                    category: allProducts![index].category,
-                                    quantity: allProducts![index].quantity);
+                                    productName: allProducts[index].productName,
+                                    productImage: allProducts[index].productImage,
+                                    code: allProducts[index].code,
+                                    category: allProducts[index].category,
+                                    quantity: allProducts[index].quantity);
                               },
                               child: Card_Items(
                                 editeProduct: ()async{
                                await  viewModel.EditProducte(allProducts[index].id);
-
                                 },
                                 deleteProduct: ()async{
                                  await viewModel.DeleteProducte(allProducts[index].id);
